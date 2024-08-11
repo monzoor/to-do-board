@@ -1,0 +1,41 @@
+version: "3.8"
+
+networks:
+  todo-board-network:
+
+services:
+  production:
+    networks:
+      - todo-board-network
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: todo-board
+    environment:
+      - NODE_ENV=production
+      - PORT=3003
+    ports:
+      - "3003:3003"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    command: ["yarn", "start"]
+
+  to-do-board-dev:
+    networks:
+      - todo-board-network
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: todo-board-dev
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    command: ["yarn", "dev"]
