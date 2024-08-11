@@ -14,6 +14,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3003
+      - MONGO_URI=mongodb://root:S3cret!!@mongo:27017/todo_board
     ports:
       - "3003:3003"
     volumes:
@@ -21,6 +22,8 @@ services:
       - /app/node_modules
       - /app/.next
     command: ["yarn", "start"]
+    depends_on:
+      - mongo
 
   to-do-board-dev:
     networks:
@@ -32,6 +35,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3000
+      - MONGO_URI=mongodb://root:S3cret!!@mongo:27017/todo_board
     ports:
       - "3000:3000"
     volumes:
@@ -39,3 +43,22 @@ services:
       - /app/node_modules
       - /app/.next
     command: ["yarn", "dev"]
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    networks:
+      - todo-board-network
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: "S3cret!!"
+      MONGO_INITDB_DATABASE: todo_board
+
+volumes:
+  mongo-data:
