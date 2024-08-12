@@ -17,4 +17,13 @@ export const ticketSchema: Schema<ITicket> = new Schema({
     required: false,
   },
   history: [historySchema],
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: "Category", // Reference to the Category model
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });

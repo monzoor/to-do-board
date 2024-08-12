@@ -1,18 +1,25 @@
 import { connectToMongoDB } from "@todo/lib";
 import Category from "@todo/model/category/category.modal";
 import { NextRequest, NextResponse } from "next/server";
-import { withAuth } from "@todo/helper";
+import { authenticateUser, withAuth } from "@todo/helper";
+import { ErrorHandler, errorResponse } from "@todo/utils";
 
 const createCategory = async (request: NextRequest) => {
   try {
     await connectToMongoDB();
 
+    const userId = authenticateUser(request);
+
+    if (!userId) {
+      throw new ErrorHandler("Invalid token", 401);
+    }
+
     const { name, description } = await request.json();
 
     if (!name || typeof name !== "string" || name.trim().length === 0) {
-      return NextResponse.json(
-        { message: "Name is required and must be a non-empty string" },
-        { status: 400 },
+      throw new ErrorHandler(
+        "Name is required and must be a non-empty string",
+        400,
       );
     }
 
@@ -20,9 +27,9 @@ const createCategory = async (request: NextRequest) => {
       description &&
       (typeof description !== "string" || description.trim().length === 0)
     ) {
-      return NextResponse.json(
-        { message: "Description, if provided, must be a non-empty string" },
-        { status: 400 },
+      throw new ErrorHandler(
+        "Description, if provided, must be a non-empty string",
+        400,
       );
     }
 
@@ -39,14 +46,23 @@ const createCategory = async (request: NextRequest) => {
       category: savedCategory,
     });
   } catch (error) {
-    console.error("Error creating category:", error);
-    return NextResponse.json({ message: "Server Error" }, { status: 500 });
+    if (error instanceof ErrorHandler) {
+      return errorResponse(error.message, error.status);
+    }
+
+    return errorResponse("Server Error", 500);
   }
 };
 
-const getCategories = async (req: NextRequest) => {
+const getCategories = async (request: NextRequest) => {
   try {
     await connectToMongoDB();
+
+    const userId = authenticateUser(request);
+
+    if (!userId) {
+      throw new ErrorHandler("Invalid token", 401);
+    }
 
     const categories = await Category.find().sort({ createdAt: -1 });
 
@@ -55,8 +71,11 @@ const getCategories = async (req: NextRequest) => {
       categories,
     });
   } catch (error) {
-    console.error("Error retrieving categories:", error);
-    return NextResponse.json({ message: "Server Error" }, { status: 500 });
+    if (error instanceof ErrorHandler) {
+      return errorResponse(error.message, error.status);
+    }
+
+    return errorResponse("Server Error", 500);
   }
 };
 

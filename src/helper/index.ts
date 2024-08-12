@@ -1,1 +1,6 @@
-export { verifyToken, withAuth } from "./server";
+export {
+  verifyToken,
+  withAuth,
+  getUserIdFromToken,
+  authenticateUser,
+} from "./server";

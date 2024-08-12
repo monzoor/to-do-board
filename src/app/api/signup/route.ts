@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 
 import User from "@todo/model/user/user.model";
 import { connectToMongoDB } from "@todo/lib";
+import { ErrorHandler, errorResponse } from "@todo/utils";
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,10 +13,7 @@ export async function POST(request: NextRequest) {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return NextResponse.json(
-        { message: "Email already exists" },
-        { status: 400 },
-      );
+      throw new ErrorHandler("Email already exists", 400);
     }
 
     const newUser = new User({ username, email, password });
@@ -32,7 +30,10 @@ export async function POST(request: NextRequest) {
       token,
     });
   } catch (error) {
-    console.error("Error creating user:", error);
-    return NextResponse.json({ message: "Server Error" }, { status: 500 });
+    if (error instanceof ErrorHandler) {
+      return errorResponse(error.message, error.status);
+    }
+
+    return errorResponse("Server Error", 500);
   }
 }

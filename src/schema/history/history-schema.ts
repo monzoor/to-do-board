@@ -9,7 +9,6 @@ export const historySchema: Schema<IHistory> = new Schema({
   },
   previousCategory: {
     type: String,
-    required: true,
   },
   newCategory: {
     type: String,

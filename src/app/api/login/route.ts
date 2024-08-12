@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 import User from "@todo/model/user/user.model";
 import { connectToMongoDB } from "@todo/lib";
+import { ErrorHandler, errorResponse } from "@todo/utils";
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,18 +14,12 @@ export async function POST(request: NextRequest) {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return NextResponse.json(
-        { message: "Invalid credentials" },
-        { status: 401 },
-      );
+      throw new ErrorHandler("Invalid credentials", 401);
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return NextResponse.json(
-        { message: "Invalid credentials" },
-        { status: 401 },
-      );
+      throw new ErrorHandler("Invalid credentials", 401);
     }
 
     // Create JWT and send response
@@ -41,7 +36,10 @@ export async function POST(request: NextRequest) {
       token,
     });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: "Server Error" }, { status: 500 });
+    if (error instanceof ErrorHandler) {
+      return errorResponse(error.message, error.status);
+    }
+
+    return errorResponse("Server Error", 500);
   }
 }
