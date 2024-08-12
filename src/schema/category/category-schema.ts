@@ -12,4 +12,8 @@ export const categorySchema: Schema<ICategory> = new Schema({
     required: false,
   },
   tickets: [ticketSchema],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
