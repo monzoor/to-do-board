@@ -108,6 +108,8 @@ export const Container: React.FC = () => {
       "sourceCategory",
     ) as CategoryType;
 
+    if (sourceCategory === targetCategory) return; // Prevent dropping within the same category
+
     if (!categories[sourceCategory] || !categories[targetCategory]) return;
 
     const sourceTickets = [...categories[sourceCategory]];
