@@ -14,7 +14,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3003
-      - MONGO_URI=mongodb://root:S3cret!!@mongo:27017/todo_board
+      - MONGO_DB_URI=mongodb://mongo:27017/todo_board
     ports:
       - "3003:3003"
     volumes:
@@ -35,7 +35,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3000
-      - MONGO_URI=mongodb://root:S3cret!!@mongo:27017/todo_board
+      - MONGO_DB_URI=mongodb://mongo:27017/todo_board
     ports:
       - "3000:3000"
     volumes:
@@ -55,10 +55,9 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+      - ./db/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: "S3cret!!"
-      MONGO_INITDB_DATABASE: todo_board
+      MONGO_DB_URI: "mongodb://mongo:27017"
 
 volumes:
   mongo-data:
