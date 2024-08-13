@@ -1,3 +1,4 @@
+import { ErrorHandler } from "@todo/utils";
 import mongoose, { Connection, ConnectOptions } from "mongoose";
 
 const DB_URI = process.env.MONGO_DB_URI;
@@ -23,6 +24,6 @@ export const connectToMongoDB = async (): Promise<void> => {
     console.log("New MongoDB connection established");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
-    throw error;
+    throw new ErrorHandler("DB connection fail", 500);
   }
 };

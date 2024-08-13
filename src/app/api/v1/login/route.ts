@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import User from "@todo/app/api/model/user/user.model";
-import { connectToMongoDB } from "@todo/lib";
+import { connectToMongoDB } from "@todo/app/api/lib";
 import { ErrorHandler, errorResponse } from "@todo/utils";
 
 export async function POST(request: NextRequest) {

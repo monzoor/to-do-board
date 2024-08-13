@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectToMongoDB } from "@todo/lib";
+import { connectToMongoDB } from "@todo/app/api/lib";
 import { authenticateUser, withAuth } from "@todo/helper";
 import { IHistory } from "@todo/app/api/types/history";
 import Category from "@todo/app/api/model/category/category.modal";
