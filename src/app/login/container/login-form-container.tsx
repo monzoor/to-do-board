@@ -4,8 +4,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IFormInputs } from "../types/login";
 import { loginSchema } from "../validation/login-validation";
+import { useDispatch } from "react-redux";
+import { authUser } from "@todo/libs/redux/slices/user/thunks/auth-user";
+import { AppDispatch } from "@todo/libs/redux/types/app-dispatch";
 
 export const LoginContainer = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
@@ -16,6 +20,7 @@ export const LoginContainer = () => {
 
   const onSubmit = (data: IFormInputs) => {
     console.log(data);
+    dispatch(authUser(data));
   };
 
   return (
