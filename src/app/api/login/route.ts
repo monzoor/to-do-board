@@ -32,8 +32,10 @@ export async function POST(request: NextRequest) {
     );
 
     return NextResponse.json({
-      message: "Login successful",
-      token,
+      status: "success",
+      data: {
+        token,
+      },
     });
   } catch (error) {
     if (error instanceof ErrorHandler) {

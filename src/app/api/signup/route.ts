@@ -26,8 +26,10 @@ export async function POST(request: NextRequest) {
     );
 
     return NextResponse.json({
-      message: "User created successfully",
-      token,
+      status: "success",
+      data: {
+        token,
+      },
     });
   } catch (error) {
     if (error instanceof ErrorHandler) {

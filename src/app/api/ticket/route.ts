@@ -5,7 +5,6 @@ import { authenticateUser, getUserIdFromToken, withAuth } from "@todo/helper";
 import Category from "@todo/model/category/category.modal";
 import { Schema } from "mongoose";
 import History from "@todo/model/history/history.modal";
-import { IHistory } from "@todo/types/history";
 import { ErrorHandler, errorResponse } from "@todo/utils";
 
 const createTicket = async (request: NextRequest) => {
@@ -27,7 +26,7 @@ const createTicket = async (request: NextRequest) => {
     }
 
     // Create the new history entry
-    const historyEntry: IHistory = {
+    const historyEntry = {
       userId,
       previousCategory: "", // Set to an empty string if this is the initial creation
       newCategory: categoryDoc.name,
@@ -69,8 +68,10 @@ const createTicket = async (request: NextRequest) => {
     );
 
     return NextResponse.json({
-      message: "Ticket created successfully",
-      ticket: savedTicket,
+      status: "success",
+      data: {
+        ticket: savedTicket,
+      },
     });
   } catch (error) {
     if (error instanceof ErrorHandler) {

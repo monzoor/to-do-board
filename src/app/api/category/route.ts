@@ -42,8 +42,10 @@ const createCategory = async (request: NextRequest) => {
     const savedCategory = await newCategory.save();
 
     return NextResponse.json({
-      message: "Category created successfully",
-      category: savedCategory,
+      status: "success",
+      data: {
+        categories: savedCategory,
+      },
     });
   } catch (error) {
     if (error instanceof ErrorHandler) {
@@ -67,8 +69,10 @@ const getCategories = async (request: NextRequest) => {
     const categories = await Category.find().sort({ createdAt: -1 });
 
     return NextResponse.json({
-      message: "Categories retrieved successfully",
-      categories,
+      status: "success",
+      data: {
+        categories,
+      },
     });
   } catch (error) {
     if (error instanceof ErrorHandler) {

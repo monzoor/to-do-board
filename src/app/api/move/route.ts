@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToMongoDB } from "@todo/lib";
-import { authenticateUser, getUserIdFromToken, withAuth } from "@todo/helper";
+import { authenticateUser, withAuth } from "@todo/helper";
 import { IHistory } from "@todo/types/history";
 import Category from "@todo/model/category/category.modal";
 import { Types } from "mongoose";
@@ -33,7 +33,7 @@ const moveTicket = async (request: NextRequest) => {
 
     // Fetch the ticket
     const categoryByTicketID = (await Category.findOne({
-      "tickets._id": newCategoryObjectId,
+      "tickets._id": ticketObjectId,
     }).exec()) as ICategory;
 
     if (!categoryByTicketID) {
@@ -44,18 +44,19 @@ const moveTicket = async (request: NextRequest) => {
     const currentCategory = await Category.findById(
       categoryByTicketID._id,
     ).exec();
-    const newCategory = await Category.findById(newCategoryObjectId).exec();
 
     if (!currentCategory) {
       throw new ErrorHandler("Current category not found", 404);
     }
+
+    const newCategory = await Category.findById(newCategoryObjectId).exec();
 
     if (!newCategory) {
       throw new ErrorHandler("New category not found", 404);
     }
 
     // Create history entry
-    const historyEntry: IHistory = {
+    const historyEntry = {
       userId,
       previousCategory: currentCategory.name,
       newCategory: newCategory.name,
@@ -70,7 +71,7 @@ const moveTicket = async (request: NextRequest) => {
       throw new ErrorHandler("Ticket not found in the current category", 404);
     }
 
-    ticket?.history.push(historyEntry);
+    ticket?.history.push(historyEntry as unknown as IHistory);
 
     // Update the current category to remove the ticket
     await Category.findByIdAndUpdate(
