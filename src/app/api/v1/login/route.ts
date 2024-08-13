@@ -35,6 +35,11 @@ export async function POST(request: NextRequest) {
       status: "success",
       data: {
         token,
+        user: {
+          id: user._id,
+          email: user.email,
+          name: user.username, // Include any other user fields you want to return
+        },
       },
     });
   } catch (error) {
