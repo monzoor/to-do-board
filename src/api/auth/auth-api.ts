@@ -2,6 +2,7 @@ import { api } from "@todo/libs";
 import Cookies from "js-cookie";
 import { APIResponse, LoginResponse, SignupResponse } from "../types";
 import { IFormInputs } from "@todo/app/login/types/login";
+import { IFormSignupInputs } from "@todo/app/signup/types/signup";
 
 export const authApi = {
   login: async (
@@ -24,16 +25,13 @@ export const authApi = {
     }
   },
   signup: async (
-    userName: string,
-    email: string,
-    password: string,
+    data: IFormSignupInputs,
   ): Promise<APIResponse<SignupResponse>> => {
     try {
-      const response = await api.post<APIResponse<SignupResponse>>("/signup", {
-        userName,
-        email,
-        password,
-      });
+      const response = await api.post<APIResponse<SignupResponse>>(
+        "/signup",
+        data,
+      );
       return response.data;
     } catch (error) {
       // Handle or log the error as needed, can be more granular
