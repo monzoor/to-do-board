@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-import User from "@todo/model/user/user.model";
+import User from "@todo/app/api/model/user/user.model";
 import { connectToMongoDB } from "@todo/lib";
 import { ErrorHandler, errorResponse } from "@todo/utils";
 

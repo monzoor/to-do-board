@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToMongoDB } from "@todo/lib";
 import { authenticateUser, withAuth } from "@todo/helper";
-import { IHistory } from "@todo/types/history";
-import Category from "@todo/model/category/category.modal";
+import { IHistory } from "@todo/app/api/types/history";
+import Category from "@todo/app/api/model/category/category.modal";
 import { Types } from "mongoose";
-import { ICategory } from "@todo/types/category";
+import { ICategory } from "@todo/app/api/types/category";
 import { ErrorHandler, errorResponse } from "@todo/utils";
 
 const moveTicket = async (request: NextRequest) => {
@@ -92,8 +92,10 @@ const moveTicket = async (request: NextRequest) => {
     );
 
     return NextResponse.json({
-      message: "Ticket moved successfully",
-      ticket: currentValue,
+      status: "success",
+      data: {
+        category: currentValue,
+      },
     });
   } catch (error) {
     if (error instanceof ErrorHandler) {

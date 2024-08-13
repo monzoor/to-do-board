@@ -1,4 +1,4 @@
-import { ICategory } from "@todo/types/category";
+import { ICategory } from "@todo/app/api/types/category";
 import { Schema } from "mongoose";
 import { ticketSchema } from "../ticket/ticket-schema";
 

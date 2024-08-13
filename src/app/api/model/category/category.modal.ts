@@ -1,5 +1,5 @@
-import { categorySchema } from "@todo/schema/category/category-schema";
-import { ICategory } from "@todo/types/category";
+import { categorySchema } from "@todo/app/api/schema/category/category-schema";
+import { ICategory } from "@todo/app/api/types/category";
 import mongoose, { Model } from "mongoose";
 
 const Category: Model<ICategory> =

@@ -1,4 +1,4 @@
-import { IHistory } from "@todo/types/history";
+import { IHistory } from "@todo/app/api/types/history";
 import { Schema } from "mongoose";
 
 export const historySchema: Schema<IHistory> = new Schema({

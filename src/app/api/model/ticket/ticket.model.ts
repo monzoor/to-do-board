@@ -1,5 +1,5 @@
-import { ticketSchema } from "@todo/schema/ticket/ticket-schema";
-import { ITicket } from "@todo/types/ticket";
+import { ticketSchema } from "@todo/app/api/schema/ticket/ticket-schema";
+import { ITicket } from "@todo/app/api/types/ticket";
 import mongoose, { Model } from "mongoose";
 
 const Ticket: Model<ITicket> =

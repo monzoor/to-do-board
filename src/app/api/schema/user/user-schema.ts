@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 import bcrypt from "bcryptjs";
-import { IUser } from "@todo/types/user";
+import { IUser } from "@todo/app/api/types/user";
 
 const userSchema = new Schema<IUser>({
   username: {

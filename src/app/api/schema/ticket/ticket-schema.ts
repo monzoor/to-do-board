@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { ITicket } from "@todo/types/ticket";
+import { ITicket } from "@todo/app/api/types/ticket";
 import { historySchema } from "../history/history-schema";
 
 export const ticketSchema: Schema<ITicket> = new Schema({

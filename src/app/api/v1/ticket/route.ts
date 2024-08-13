@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToMongoDB } from "@todo/lib";
-import Ticket from "@todo/model/ticket/ticket.model";
-import { authenticateUser, getUserIdFromToken, withAuth } from "@todo/helper";
-import Category from "@todo/model/category/category.modal";
-import { Schema } from "mongoose";
-import History from "@todo/model/history/history.modal";
+import Ticket from "@todo/app/api/model/ticket/ticket.model";
+import { authenticateUser, withAuth } from "@todo/helper";
+import Category from "@todo/app/api/model/category/category.modal";
+import History from "@todo/app/api/model/history/history.modal";
 import { ErrorHandler, errorResponse } from "@todo/utils";
 
 const createTicket = async (request: NextRequest) => {
