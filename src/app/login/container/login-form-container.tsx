@@ -1,27 +1,9 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { IFormInputs } from "../types/login";
-import { loginSchema } from "../validation/login-validation";
-import { useDispatch } from "react-redux";
-import { authUser } from "@todo/libs/redux/slices/user/thunks/auth-user";
-import { AppDispatch } from "@todo/libs/redux/types/app-dispatch";
+import { useLogin } from "@todo/hooks/use-login";
 
 export const LoginContainer = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IFormInputs>({
-    resolver: yupResolver(loginSchema),
-  });
-
-  const onSubmit = (data: IFormInputs) => {
-    console.log(data);
-    dispatch(authUser(data));
-  };
+  const { register, handleSubmit, errors, onSubmit } = useLogin();
 
   return (
     <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -33,6 +15,7 @@ export const LoginContainer = () => {
           Your email
         </label>
         <input
+          autoComplete="new-email"
           type="email"
           id="email"
           className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
@@ -49,6 +32,7 @@ export const LoginContainer = () => {
           Password
         </label>
         <input
+          autoComplete="new-password"
           type="password"
           id="password"
           placeholder="••••••••"

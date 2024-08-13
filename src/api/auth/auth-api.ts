@@ -1,17 +1,17 @@
 import { api } from "@todo/libs";
 import Cookies from "js-cookie";
 import { APIResponse, LoginResponse, SignupResponse } from "../types";
+import { IFormInputs } from "@todo/app/login/types/login";
 
 export const authApi = {
   login: async (
-    email: string,
-    password: string,
+    credentials: IFormInputs,
   ): Promise<APIResponse<LoginResponse>> => {
     try {
-      const response = await api.post<APIResponse<LoginResponse>>("/login", {
-        email,
-        password,
-      });
+      const response = await api.post<APIResponse<LoginResponse>>(
+        "/login",
+        credentials,
+      );
       // Set the authToken cookie
       const { token } = response.data.data;
       Cookies.set("authToken", token, { expires: 7 }); // Set the cookie with a 7-day expiration
