@@ -1,6 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
+import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
+import { AppDispatch } from "@todo/libs/redux/types/app-dispatch";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 // Define the Ticket type
 interface Ticket {
@@ -104,6 +108,7 @@ const Category: React.FC<CategoryProps> = ({
 
 // Container Component
 export const Container: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [categories, setCategories] = useState<{
     todo: Ticket[];
     inProgress: Ticket[];
@@ -123,6 +128,13 @@ export const Container: React.FC = () => {
   const [draggingCategory, setDraggingCategory] = useState<CategoryType | null>(
     null,
   );
+  const test = useAppSelector((state) => state.categories.data);
+
+  console.log("test====", test);
+
+  const tt = () => {
+    dispatch(getCategories());
+  };
 
   const onDragStart = (
     e: React.DragEvent<HTMLDivElement>,
