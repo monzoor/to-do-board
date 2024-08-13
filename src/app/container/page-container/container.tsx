@@ -35,7 +35,7 @@ const Ticket: React.FC<TicketProps> = ({ ticket, index, onDragStart }) => {
         </div>
         <div className="py-3 font-bold">{ticket.title}</div>
         <div className="flex-grow">
-          <div className="text-sm">{ticket.description}</div>
+          <div className="description text-sm">{ticket.description}</div>
         </div>
       </div>
     </div>
@@ -49,6 +49,7 @@ interface CategoryProps {
   onDrop: (e: React.DragEvent<HTMLDivElement>, category: CategoryType) => void;
   onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   category: CategoryType;
+  draggingCategory?: CategoryType | ""; // Adjusted to handle empty string
 }
 
 const Category: React.FC<CategoryProps> = ({
@@ -57,16 +58,46 @@ const Category: React.FC<CategoryProps> = ({
   onDrop,
   onDragOver,
   category,
+  draggingCategory,
 }) => {
+  const [isDraggingOver, setIsDraggingOver] = useState(false);
+
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDraggingOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDraggingOver(false);
+  };
+
   return (
     <div
-      className="category item w-80 bg-white"
-      onDrop={(e) => onDrop(e, category)}
-      onDragOver={onDragOver}
+      className="category item relative flex min-h-[300px] w-80 flex-col bg-white"
+      onDrop={(e) => {
+        onDrop(e, category);
+        setIsDraggingOver(false);
+      }}
+      onDragOver={(e) => {
+        onDragOver(e);
+        handleDragEnter(e);
+      }}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
       data-category={category}
     >
       <div className="bg-blue-400 p-4 font-bold shadow-md">{header}</div>
-      <div>{children}</div>
+      <div className="relative flex-grow">
+        {isDraggingOver && draggingCategory !== category && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-50">
+            <span className="text-lg text-white">
+              Please drop here your ticket
+            </span>
+          </div>
+        )}
+        <div className="relative flex-grow">{children}</div>
+      </div>
     </div>
   );
 };
@@ -78,12 +109,20 @@ export const Container: React.FC = () => {
     inProgress: Ticket[];
   }>({
     todo: [
-      { title: "Task 1", description: "Task 1 description" },
+      {
+        title: "Task 1",
+        description:
+          "Task 1 description Task 1 description Task 1 description Task 1 description Task 1 descriptionTask 1 description",
+      },
       { title: "Task 2", description: "Task 2 description" },
       { title: "Task 3", description: "Task 3 description" },
     ],
     inProgress: [{ title: "Task 4", description: "Task 4 description" }],
   });
+
+  const [draggingCategory, setDraggingCategory] = useState<CategoryType | null>(
+    null,
+  );
 
   const onDragStart = (
     e: React.DragEvent<HTMLDivElement>,
@@ -92,6 +131,7 @@ export const Container: React.FC = () => {
   ) => {
     e.dataTransfer.setData("ticketIndex", ticketIndex.toString());
     e.dataTransfer.setData("sourceCategory", sourceCategory);
+    setDraggingCategory(sourceCategory); // Set the source category
   };
 
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -121,6 +161,7 @@ export const Container: React.FC = () => {
       [sourceCategory]: sourceTickets,
       [targetCategory]: targetTickets,
     });
+    setDraggingCategory(null); // Reset the dragging category after drop
   };
 
   return (
@@ -131,6 +172,7 @@ export const Container: React.FC = () => {
           onDrop={onDrop}
           onDragOver={onDragOver}
           category="todo"
+          draggingCategory={draggingCategory || ""} // Pass the current dragging category
         >
           {categories.todo.map((ticket, index) => (
             <Ticket
@@ -146,6 +188,7 @@ export const Container: React.FC = () => {
           onDrop={onDrop}
           onDragOver={onDragOver}
           category="inProgress"
+          draggingCategory={draggingCategory || ""} // Pass the current dragging category
         >
           {categories.inProgress.map((ticket, index) => (
             <Ticket
