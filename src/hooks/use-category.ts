@@ -1,3 +1,3 @@
 import { Categories } from "@todo/types/category";
 
-const useCategory = ({ category }: { category: Categories }) => {};
+export const useCategory = ({ category }: { category: Categories }) => {};

@@ -8,7 +8,7 @@ export const CategoryCard: React.FC<CategoryProps> = ({
   children,
   onDrop,
   onDragOver,
-  category,
+  categoryId,
   draggingCategory,
 }) => {
   const [isDraggingOver, setIsDraggingOver] = useState(false);
@@ -27,7 +27,7 @@ export const CategoryCard: React.FC<CategoryProps> = ({
     <div
       className="category item relative flex min-h-[300px] w-80 flex-col bg-white"
       onDrop={(e) => {
-        onDrop(e, category);
+        onDrop(e, categoryId);
         setIsDraggingOver(false);
       }}
       onDragOver={(e) => {
@@ -36,11 +36,11 @@ export const CategoryCard: React.FC<CategoryProps> = ({
       }}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
-      data-category={category}
+      data-category={categoryId}
     >
       <div className="bg-blue-400 p-4 font-bold shadow-md">{header}</div>
       <div className="relative flex-grow">
-        {isDraggingOver && draggingCategory !== category && (
+        {isDraggingOver && draggingCategory !== categoryId && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-50">
             <span className="text-lg text-white">
               Please drop here your ticket

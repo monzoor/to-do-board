@@ -6,6 +6,6 @@ export interface Ticket {
   assignTo: string;
   history: History[];
   category: string;
-  createdAt: Date;
+  createdAt: string;
   _id: string;
 }

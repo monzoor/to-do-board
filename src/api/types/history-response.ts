@@ -2,6 +2,6 @@ export interface History {
   userId: string;
   previousCategory: string;
   newCategory: string;
-  historyDate: Date;
+  historyDate: string;
   _id: string;
 }

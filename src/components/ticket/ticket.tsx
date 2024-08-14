@@ -11,7 +11,7 @@ export const Ticket: React.FC<TicketProps> = ({
     <div
       className="ticket m-4 bg-white"
       draggable
-      onDragStart={(e) => onDragStart(e, index, "todo")}
+      onDragStart={(e) => onDragStart(e, index, ticket.category || "")}
     >
       <div className="flex flex-col items-start bg-slate-200 p-4">
         <div className="flex-shrink-0 rounded-full bg-red-200 px-3 py-1 text-xs">
