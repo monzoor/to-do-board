@@ -26,4 +26,18 @@ export const ticketSchema: Schema<ITicket> = new Schema({
     type: Date,
     default: Date.now,
   },
+  dueDate: {
+    type: Date,
+    required: false,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+// Middleware to update the updatedAt field on document save
+ticketSchema.pre("save", function (next) {
+  this.updatedAt = new Date();
+  next();
 });

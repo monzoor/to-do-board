@@ -25,7 +25,9 @@ const useCreateTicket = () => {
     resolver: yupResolver(createTicketSchema),
   });
 
-  const onSubmit = async (data: ICreateTicketFormInputs) => {};
+  const onSubmit = async (data: ICreateTicketFormInputs) => {
+    console.log(data);
+  };
 
   return {
     register,

@@ -16,7 +16,13 @@ const createTicket = async (request: NextRequest) => {
       throw new ErrorHandler("Invalid token", 401);
     }
 
-    const { title, description, category, history = [] } = await request.json();
+    const {
+      title,
+      description,
+      category,
+      dueDate,
+      history = [],
+    } = await request.json();
 
     // Fetch the category details
     const categoryDoc = await Category.findById(category).exec();
@@ -30,6 +36,7 @@ const createTicket = async (request: NextRequest) => {
       previousCategory: "", // Set to an empty string if this is the initial creation
       newCategory: categoryDoc.name,
       historyDate: new Date(),
+      dueDate, // Add dueDate to history entry
     };
 
     // Save history entry
@@ -42,8 +49,10 @@ const createTicket = async (request: NextRequest) => {
       description,
       assignTo: userId,
       category,
+      dueDate, // Add dueDate
       history: [historyEntry, ...history], // Add the new history entry and existing history
       createdAt: new Date(),
+      updatedAt: new Date(), // Set updatedAt to current date
     });
 
     const savedTicket = await newTicket.save();
@@ -57,9 +66,11 @@ const createTicket = async (request: NextRequest) => {
             title: savedTicket.title,
             description: savedTicket.description,
             assignTo: savedTicket.assignTo,
+            dueDate: savedTicket.dueDate, // Add dueDate to the category tickets
             history: savedTicket.history,
             category: savedTicket.category,
             createdAt: savedTicket.createdAt,
+            updatedAt: savedTicket.updatedAt, // Add updatedAt to the category tickets
           },
         },
       },

@@ -5,4 +5,5 @@ export interface IHistory extends Document {
   previousCategory: string;
   newCategory: string;
   historyDate: Date;
+  dueDate: Date;
 }

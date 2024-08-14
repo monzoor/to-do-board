@@ -19,4 +19,8 @@ export const historySchema: Schema<IHistory> = new Schema({
     default: Date.now,
     required: true,
   },
+  dueDate: {
+    type: Date,
+    required: true,
+  },
 });

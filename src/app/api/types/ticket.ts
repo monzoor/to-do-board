@@ -8,4 +8,6 @@ export interface ITicket extends Document {
   history: IHistory[];
   category: Schema.Types.ObjectId;
   createdAt: Date;
+  dueDate: Date;
+  updatedAt: Date;
 }

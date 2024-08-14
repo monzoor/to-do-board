@@ -55,14 +55,6 @@ const moveTicket = async (request: NextRequest) => {
       throw new ErrorHandler("New category not found", 404);
     }
 
-    // Create history entry
-    const historyEntry = {
-      userId,
-      previousCategory: currentCategory.name,
-      newCategory: newCategory.name,
-      historyDate: new Date(),
-    };
-
     const ticket = categoryByTicketID.tickets.find(
       (t) => (t._id as Types.ObjectId).toString() === ticketId,
     );
@@ -70,6 +62,15 @@ const moveTicket = async (request: NextRequest) => {
     if (!ticket) {
       throw new ErrorHandler("Ticket not found in the current category", 404);
     }
+
+    // Create history entry
+    const historyEntry = {
+      userId,
+      previousCategory: currentCategory.name,
+      newCategory: newCategory.name,
+      historyDate: new Date(),
+      dueDate: ticket.dueDate,
+    };
 
     ticket?.history.push(historyEntry as unknown as IHistory);
 
