@@ -5,6 +5,7 @@ import { useModal } from "@todo/hooks/use-modal";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { selectUser } from "@todo/libs/redux/slices/user/selector/get-user";
 import { CreateCategory } from "../contaol-modal/create-category/create-category";
+import { CreateTicket } from "../contaol-modal/create-ticket/create-ticket";
 
 export const CreateActions = () => {
   const {
@@ -56,15 +57,7 @@ export const CreateActions = () => {
         isVisible={isTicketModalVisible}
         onClose={closeTicketModal}
       >
-        {/* Ticket creation form or content */}
-        <p>Ticket creation content goes here.</p>
-        <button
-          className="background-transparent mb-1 mr-1 px-6 py-2 text-sm font-bold uppercase text-red-500 outline-none transition-all duration-150 ease-linear focus:outline-none"
-          type="button"
-          onClick={closeTicketModal}
-        >
-          Close
-        </button>
+        <CreateTicket closeTicketModal={closeTicketModal} />
       </Modal>
     </div>
   );
