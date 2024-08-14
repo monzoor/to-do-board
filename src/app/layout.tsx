@@ -4,8 +4,8 @@ import "./globals.css";
 import { Header } from "@todo/components";
 import { getInitialStoreData } from "@todo/helper";
 
-import StoreProvider from "./container/provider/provider";
-import { CreateActions } from "./container/control-header/control-header";
+import StoreProvider from "./components/provider/provider";
+import { CreateActions } from "./components/control-header/control-header";
 
 const inter = Inter({ subsets: ["latin"] });
 
