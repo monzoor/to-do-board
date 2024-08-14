@@ -1,6 +1,6 @@
 import { History } from "./history-response";
 
-export interface Ticket {
+export interface TicketResponse {
   title: string;
   description: string;
   assignTo: string;

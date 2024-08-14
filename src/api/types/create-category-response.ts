@@ -1,9 +1,9 @@
-import { Ticket } from "./ticket-respone";
+import { TicketResponse } from "./ticket-response";
 
 export interface CategoryResponse {
   name: string;
   description: string;
   createdAt: string;
   _id: string;
-  tickets: Ticket[];
+  tickets: TicketResponse[];
 }

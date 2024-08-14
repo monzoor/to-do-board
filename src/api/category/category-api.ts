@@ -19,7 +19,7 @@ export const categoryApi = {
       throw error;
     }
   },
-  getCategories: async (config: AxiosRequestConfig | null | {}) => {
+  getCategories: async (config?: AxiosRequestConfig | null | {}) => {
     try {
       const response = await api.get<APIResponse<CategoryResponse[]>>(
         "/category",

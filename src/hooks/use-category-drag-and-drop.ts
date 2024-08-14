@@ -2,8 +2,12 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { selectCategories } from "@todo/libs/redux/slices/categories/selectors/get-categories";
 import { Categories } from "@todo/types/category";
+import { ticketApi } from "@todo/api/ticket/ticket-api";
+import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
+import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
 
 export const useDragAndDrop = () => {
+  const dispatch = useAppDispatch();
   const categoriesItems = useAppSelector(selectCategories) as Categories;
 
   const [categories, setCategories] = useState<Categories>([]);
@@ -34,7 +38,7 @@ export const useDragAndDrop = () => {
   }, []);
 
   const onDrop = useCallback(
-    (e: React.DragEvent<HTMLDivElement>, targetCategoryId: string) => {
+    async (e: React.DragEvent<HTMLDivElement>, targetCategoryId: string) => {
       e.preventDefault();
       const ticketIndex = e.dataTransfer.getData("ticketIndex");
       const sourceCategoryId = e.dataTransfer.getData("sourceCategoryId");
@@ -64,6 +68,18 @@ export const useDragAndDrop = () => {
         ),
       );
       setDraggingCategory(null);
+
+      try {
+        await ticketApi.moveTicket({
+          ticketId: removedTicket._id,
+          newCategoryId: targetCategoryId,
+        });
+
+        // Dispatch getCategories to update categories in the state
+        dispatch(getCategories());
+      } catch (error) {
+        console.error("Error moving ticket or fetching categories:", error);
+      }
     },
     [memoizedCategories],
   );
