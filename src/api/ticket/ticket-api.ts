@@ -20,4 +20,28 @@ export const ticketApi = {
       throw error;
     }
   },
+  createTicket: async ({
+    title,
+    description,
+    category,
+    dueDate,
+  }: {
+    title: string;
+    description: string;
+    category: string;
+    dueDate: string;
+  }) => {
+    try {
+      const response = await api.post<APIResponse<TicketResponse>>("/ticket", {
+        title,
+        description,
+        category,
+        dueDate,
+      });
+      return response.data.data;
+    } catch (error) {
+      console.error("Create ticket error:", error);
+      throw error;
+    }
+  },
 };

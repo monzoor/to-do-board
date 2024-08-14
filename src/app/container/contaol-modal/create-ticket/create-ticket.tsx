@@ -4,8 +4,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { createTicketSchema } from "./validation/create-ticket-schema";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { selectCategories } from "@todo/libs/redux/slices/categories/selectors/get-categories";
+import { ticketApi } from "@todo/api/ticket/ticket-api";
+import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
+import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
 
-const useCreateTicket = () => {
+const useCreateTicket = ({
+  closeTicketModal,
+}: {
+  closeTicketModal: () => void;
+}) => {
+  const dispatch = useAppDispatch();
+
   const categoriesItems = useAppSelector(selectCategories);
   const getCategoriesList =
     (categoriesItems &&
@@ -26,7 +35,15 @@ const useCreateTicket = () => {
   });
 
   const onSubmit = async (data: ICreateTicketFormInputs) => {
-    console.log(data);
+    const newData = {
+      ...data,
+      dueDate: new Date(data.dueDate).toISOString(),
+    };
+    const response = await ticketApi.createTicket(newData);
+    if (response) {
+      dispatch(getCategories());
+      closeTicketModal();
+    }
   };
 
   return {
@@ -44,7 +61,9 @@ export const CreateTicket = ({
   closeTicketModal: () => void;
 }) => {
   const { register, handleSubmit, errors, onSubmit, getCategoriesList } =
-    useCreateTicket();
+    useCreateTicket({
+      closeTicketModal,
+    });
 
   return (
     <div>
