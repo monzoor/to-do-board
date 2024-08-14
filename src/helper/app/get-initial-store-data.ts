@@ -1,6 +1,4 @@
-import { Categories } from "@todo/types/category";
-import { Nullable } from "@todo/types/nulable";
-import { User } from "@todo/types/user";
+import { User, Nullable, Categories } from "@todo/types";
 import { headers } from "next/headers";
 
 export const getInitialStoreData = (): {

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CategoriesState } from "./types/categories-state";
-import { Categories } from "@todo/types/category";
+import { Categories } from "@todo/types";
 import { getCategories } from "./thunks/get-categories";
 
 const initialState: CategoriesState = {

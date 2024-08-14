@@ -1,5 +1,4 @@
 import { ReduxRequest } from "@todo/libs/redux/types/redux-request";
-import { Nullable } from "@todo/types/nulable";
-import { User } from "@todo/types/user";
+import { User, Nullable } from "@todo/types";
 
 export type UserState = ReduxRequest<Nullable<User>>;
