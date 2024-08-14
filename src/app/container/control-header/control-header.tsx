@@ -4,8 +4,8 @@ import { Modal } from "@todo/components";
 import { useModal } from "@todo/hooks/use-modal";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { selectUser } from "@todo/libs/redux/slices/user/selector/get-user";
-import { CreateCategory } from "../contaol-modal/create-category/create-category";
-import { CreateTicket } from "../contaol-modal/create-ticket/create-ticket";
+import { CreateCategory } from "../control-modal/create-category/create-category";
+import { CreateTicket } from "../control-modal/create-ticket/create-ticket";
 
 export const CreateActions = () => {
   const {
