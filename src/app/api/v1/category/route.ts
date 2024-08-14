@@ -43,9 +43,7 @@ const createCategory = async (request: NextRequest) => {
 
     return NextResponse.json({
       status: "success",
-      data: {
-        categories: savedCategory,
-      },
+      data: savedCategory,
     });
   } catch (error) {
     if (error instanceof ErrorHandler) {
@@ -70,9 +68,7 @@ const getCategories = async (request: NextRequest) => {
 
     return NextResponse.json({
       status: "success",
-      data: {
-        categories,
-      },
+      data: categories,
     });
   } catch (error) {
     if (error instanceof ErrorHandler) {

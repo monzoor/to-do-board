@@ -68,9 +68,7 @@ const createTicket = async (request: NextRequest) => {
 
     return NextResponse.json({
       status: "success",
-      data: {
-        ticket: savedTicket,
-      },
+      data: savedTicket,
     });
   } catch (error) {
     if (error instanceof ErrorHandler) {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
+import { selectCategories } from "@todo/libs/redux/slices/categories/selectors/get-categories";
 import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
 import { AppDispatch } from "@todo/libs/redux/types/app-dispatch";
 import React, { useEffect, useState } from "react";
@@ -128,9 +129,9 @@ export const Container: React.FC = () => {
   const [draggingCategory, setDraggingCategory] = useState<CategoryType | null>(
     null,
   );
-  const test = useAppSelector((state) => state.categories.data);
+  const categoriesItems = useAppSelector(selectCategories);
 
-  console.log("test====", test);
+  console.log("test====", categoriesItems);
 
   const tt = () => {
     dispatch(getCategories());

@@ -1,5 +1,5 @@
 import { authApi } from "@todo/api/auth/auth-api";
-import { categoryApi } from "@todo/api/auth/category-api";
+import { categoryApi } from "@todo/api/category/category-api";
 import { UserResponse } from "@todo/api/types";
 import { CategoryResponse } from "@todo/api/types/create-category-response";
 import { headers } from "next/headers";
