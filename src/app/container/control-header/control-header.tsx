@@ -4,6 +4,7 @@ import { Modal } from "@todo/components";
 import { useModal } from "@todo/hooks/use-modal";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { selectUser } from "@todo/libs/redux/slices/user/selector/get-user";
+import { CreateCategory } from "../contaol-modal/create-category/create-category";
 
 export const CreateActions = () => {
   const {
@@ -47,23 +48,7 @@ export const CreateActions = () => {
         isVisible={isCategoryModalVisible}
         onClose={closeCategoryModal}
       >
-        {/* Category creation form or content */}
-        <p>Category creation content goes here.</p>
-        <div className="border-blueGray-200 flex items-center justify-end rounded-b border-t border-solid p-6">
-          <button
-            className="background-transparent mb-1 mr-1 px-6 py-2 text-sm font-bold uppercase text-red-500 outline-none transition-all duration-150 ease-linear focus:outline-none"
-            type="button"
-            onClick={closeCategoryModal}
-          >
-            Close
-          </button>
-          <button
-            className="mb-1 mr-1 rounded bg-emerald-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-emerald-600"
-            type="button"
-          >
-            Save Changes
-          </button>
-        </div>
+        <CreateCategory closeCategoryModal={closeCategoryModal} />
       </Modal>
 
       <Modal
