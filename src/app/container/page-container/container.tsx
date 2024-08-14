@@ -4,8 +4,14 @@ import { CategoryCard, Ticket } from "@todo/components";
 import { useDragAndDrop } from "@todo/hooks/use-category-drag-and-drop";
 
 export const Container: React.FC = () => {
-  const { categories, draggingCategory, onDragStart, onDragOver, onDrop } =
-    useDragAndDrop();
+  const {
+    categories,
+    draggingCategory,
+    onDragStart,
+    onDragOver,
+    onDrop,
+    getStatus,
+  } = useDragAndDrop();
 
   return (
     <div className="container mx-auto overflow-hidden py-10 pl-5">
@@ -25,6 +31,7 @@ export const Container: React.FC = () => {
                 ticket={ticket}
                 index={index}
                 onDragStart={(e) => onDragStart(e, index, category._id)}
+                getStatus={getStatus}
               />
             ))}
           </CategoryCard>

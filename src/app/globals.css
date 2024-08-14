@@ -17,51 +17,16 @@
 }
 
 body {
-  /* background: linear-gradient(
+  background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb)); */
+    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-/* Add this CSS */
-.category {
-  transition: background-color 0.3s ease;
-}
-
-.category.dragged-over {
-  background-color: #ffeeba; /* Light yellow background */
-}
-
-.ticket {
-  margin: 4px;
-  background-color: white;
-  cursor: grab;
-}
-
-.ticket.dragging {
-  /* Remove opacity or set it to 1 to keep the original appearance */
-  opacity: 1;
-}
-
-/* Adjust placeholder styling */
-.placeholder {
-  border: 2px dashed #ccc;
-  margin: 4px;
-  height: 60px; /* Adjust the height as needed */
-  background-color: #f9f9f9; /* Optional: add a light background */
-}
-.description {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }

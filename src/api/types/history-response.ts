@@ -4,4 +4,5 @@ export interface History {
   newCategory: string;
   historyDate: string;
   _id: string;
+  dueDate: string;
 }

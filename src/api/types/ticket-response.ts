@@ -8,4 +8,5 @@ export interface TicketResponse {
   category: string;
   createdAt: string;
   _id: string;
+  dueDate: string;
 }

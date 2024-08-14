@@ -9,10 +9,12 @@ export interface TicketProps {
       newCategory: string;
       historyDate: string;
       _id: string;
+      dueDate: string;
     }>;
     category?: string;
     createdAt?: string;
     _id?: string;
+    dueDate: string;
   };
   index: number;
   onDragStart: (
@@ -20,4 +22,5 @@ export interface TicketProps {
     index: number,
     sourceCategoryId: string,
   ) => void;
+  getStatus: (dueDate: string) => { status: string; color: string };
 }

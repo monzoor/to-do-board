@@ -25,7 +25,7 @@ export const CategoryCard: React.FC<CategoryProps> = ({
 
   return (
     <div
-      className="category item relative flex min-h-[300px] w-80 flex-col bg-white"
+      className="category item relative flex min-h-[300px] w-80 flex-col border border-gray-200 bg-white"
       onDrop={(e) => {
         onDrop(e, categoryId);
         setIsDraggingOver(false);
@@ -39,7 +39,7 @@ export const CategoryCard: React.FC<CategoryProps> = ({
       data-category={categoryId}
     >
       <div className="bg-blue-400 p-4 font-bold shadow-md">{header}</div>
-      <div className="relative flex-grow">
+      <div className="relative flex-grow p-2">
         {isDraggingOver && draggingCategory !== categoryId && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-50">
             <span className="text-lg text-white">
