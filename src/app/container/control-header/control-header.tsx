@@ -1,7 +1,7 @@
 "use client";
 
+import { Modal } from "@todo/components";
 import { useModal } from "@todo/hooks/use-modal";
-import { Modal } from "../modal/modal";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { selectUser } from "@todo/libs/redux/slices/user/selector/get-user";
 
@@ -19,7 +19,7 @@ export const CreateActions = () => {
 
   const user = useAppSelector(selectUser);
 
-  if (!user?.id) {
+  if (!user?.user?.id) {
     return null;
   }
 

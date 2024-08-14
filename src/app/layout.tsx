@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@todo/components";
+import { getInitialStoreData } from "@todo/helper";
 
 import StoreProvider from "./container/provider/provider";
-import { getInitialStoreData } from "@todo/helper/app/get-initial-store-data";
-import { CreateActions } from "@todo/components/control-header/control-header";
+import { CreateActions } from "./container/control-header/control-header";
 
 const inter = Inter({ subsets: ["latin"] });
 

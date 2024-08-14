@@ -34,9 +34,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       status: "success",
       data: {
-        id: user._id,
-        email: user.email,
-        name: user.username, // Include any other user fields you want to return
+        user: {
+          id: user._id,
+          email: user.email,
+          name: user.username, // Include any other user fields you want to return
+        },
       },
     });
   } catch (error) {
