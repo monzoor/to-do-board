@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@todo/components";
 
 import StoreProvider from "./container/provider/provider";
+import { getInitialStoreData } from "@todo/helper/app/get-initial-store-data";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,10 +18,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const initialStoreData = getInitialStoreData();
   return (
     <html lang="en">
       <body className={inter.className}>
-        <StoreProvider>
+        <StoreProvider initialStoreData={initialStoreData}>
           <Header />
           {children}
         </StoreProvider>

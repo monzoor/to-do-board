@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
+import { appInitialiser } from "./helper/app/app-initialise";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   // Extract the token from cookies or headers
   const token = request.cookies.get("authToken")?.value;
 
@@ -21,12 +22,20 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // Redirect to dashboard if the user is trying to access the root path and has a token
-  if (request.nextUrl.pathname === "/") {
-    return NextResponse.next();
-  }
+  // Fetch user and categories data if the token is present
+  try {
+    const { user, categories } = await appInitialiser();
 
-  return NextResponse.next(); // Allow access if token is present
+    // Set user and categories data in headers
+    const response = NextResponse.next();
+    response.headers.set("X-User", JSON.stringify(user));
+    response.headers.set("X-Categories", JSON.stringify(categories));
+
+    return response;
+  } catch (error) {
+    console.error("Middleware error:", error);
+    return NextResponse.redirect(new URL("/login", request.url)); // Redirect on error
+  }
 }
 
 // Define which paths the middleware applies to

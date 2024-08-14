@@ -17,12 +17,15 @@ const api = axios.create({
 // Request interceptor to add token if available
 api.interceptors.request.use(
   (config) => {
-    const token = Cookies.get("authToken"); // Adjust cookie name as needed
+    const token = Cookies.get("authToken");
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    } else {
-      delete config.headers.Authorization; // Remove Authorization header if no token
+    // To avoid errors during SSR, check if window is defined
+    if (typeof window !== "undefined") {
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      } else {
+        delete config.headers.Authorization; // Remove Authorization header if no token
+      }
     }
 
     return config;

@@ -1,15 +1,34 @@
-"use client"
+"use client";
 
-import store from '@todo/libs/redux/store'
-import React from 'react'
-import { Provider } from 'react-redux'
+import { setCategories } from "@todo/libs/redux/slices/categories/slice";
+import { receiveUser } from "@todo/libs/redux/slices/user";
+import store from "@todo/libs/redux/store";
+import { AppStore } from "@todo/libs/redux/types/app-store";
+import { Categories } from "@todo/types/category";
+import { Nullable } from "@todo/types/nulable";
+import { User } from "@todo/types/user";
+import React, { useRef } from "react";
+import { Provider } from "react-redux";
 
-const StoreProvider = ({children} : {
-    children: React.ReactNode
-}) => {
-  return (
-    <Provider store={store()}>{children}</Provider>
-  )
+interface StoreProviderProps {
+  children: React.ReactNode;
+  initialStoreData: {
+    user: Nullable<User>;
+    categories: Nullable<Categories>;
+  };
 }
+const StoreProvider = ({ children, initialStoreData }: StoreProviderProps) => {
+  const storeRef = useRef<AppStore>();
+  if (!storeRef.current) {
+    storeRef.current = store();
+    if (initialStoreData && initialStoreData.user) {
+      storeRef.current.dispatch(receiveUser(initialStoreData.user));
+    }
+    if (initialStoreData && initialStoreData.categories) {
+      storeRef.current.dispatch(setCategories(initialStoreData.categories));
+    }
+  }
+  return <Provider store={storeRef.current}>{children}</Provider>;
+};
 
-export default StoreProvider
+export default StoreProvider;
