@@ -14,12 +14,12 @@ export async function POST(request: NextRequest) {
 
     const user = await User.findOne({ email });
     if (!user) {
-      throw new ErrorHandler("Invalid credentials", 401);
+      return errorResponse("Invalid credentials", 401);
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      throw new ErrorHandler("Invalid credentials", 401);
+      return errorResponse("Invalid credentials", 401);
     }
 
     // Create JWT and send response

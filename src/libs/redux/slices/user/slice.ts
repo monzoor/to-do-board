@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
 import { UserState } from "./types/user-state";
 import { User } from "@todo/types";
-import { authUser } from "./thunks/auth-user";
+import { authUser, signupUser } from "./thunks/auth-user";
+import { UserResponse } from "@todo/app-api/types";
 
 const initialState: UserState = {
   requested: false,
@@ -29,31 +30,40 @@ const slice = createSlice({
     resetUser: () => initialState,
   },
   extraReducers: (builder) => {
-    builder.addCase(authUser.pending, (state: UserState) => {
-      return {
-        ...state,
-        requested: true,
-        errorOccurred: false,
-        error: null,
-      };
-    });
-    builder.addCase(authUser.fulfilled, (state: UserState, action) => {
-      return {
-        ...state,
-        requested: false,
-        errorOccurred: false,
-        error: null,
-        data: action.payload,
-      };
-    });
-    builder.addCase(authUser.rejected, (state: UserState, action) => {
-      return {
-        ...state,
-        requested: false,
-        errorOccurred: true,
-        error: action.error?.message || null,
-      };
-    });
+    builder.addMatcher(
+      isAnyOf(signupUser.pending, authUser.pending),
+      (state) => {
+        return {
+          ...state,
+          requested: true,
+          errorOccurred: false,
+          error: null,
+        };
+      },
+    );
+    builder.addMatcher(
+      isAnyOf(signupUser.fulfilled, authUser.fulfilled),
+      (state, action) => {
+        return {
+          ...state,
+          requested: false,
+          errorOccurred: false,
+          error: null,
+          data: action.payload as UserResponse,
+        };
+      },
+    );
+    builder.addMatcher(
+      isAnyOf(signupUser.rejected, authUser.rejected),
+      (state: UserState, action) => {
+        return {
+          ...state,
+          requested: false,
+          errorOccurred: true,
+          error: action.error?.message || null,
+        };
+      },
+    );
   },
 });
 

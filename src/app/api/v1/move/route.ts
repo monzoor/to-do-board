@@ -14,13 +14,13 @@ const moveTicket = async (request: NextRequest) => {
     const userId = authenticateUser(request);
 
     if (!userId) {
-      throw new ErrorHandler("Invalid token", 401);
+      return errorResponse("Invalid token", 401);
     }
 
     const { ticketId, newCategoryId } = await request.json();
 
     if (!ticketId || !newCategoryId) {
-      throw new ErrorHandler("Missing required fields", 400);
+      return errorResponse("Missing required fields", 400);
     }
 
     const ticketObjectId = new Types.ObjectId(ticketId);
@@ -28,7 +28,7 @@ const moveTicket = async (request: NextRequest) => {
 
     // Validate ticketId and newCategoryId
     if (!ticketObjectId || !newCategoryObjectId) {
-      throw new ErrorHandler("Invalid ticketId or newCategoryId", 400);
+      return errorResponse("Invalid ticketId or newCategoryId", 400);
     }
 
     // Fetch the ticket
@@ -37,7 +37,7 @@ const moveTicket = async (request: NextRequest) => {
     }).exec()) as ICategory;
 
     if (!categoryByTicketID) {
-      throw new ErrorHandler("Ticket not found", 404);
+      return errorResponse("Ticket not found", 404);
     }
 
     // Fetch the current and new categories
@@ -46,13 +46,13 @@ const moveTicket = async (request: NextRequest) => {
     ).exec();
 
     if (!currentCategory) {
-      throw new ErrorHandler("Current category not found", 404);
+      return errorResponse("Current category not found", 404);
     }
 
     const newCategory = await Category.findById(newCategoryObjectId).exec();
 
     if (!newCategory) {
-      throw new ErrorHandler("New category not found", 404);
+      return errorResponse("New category not found", 404);
     }
 
     const ticket = categoryByTicketID.tickets.find(
@@ -60,7 +60,7 @@ const moveTicket = async (request: NextRequest) => {
     );
 
     if (!ticket) {
-      throw new ErrorHandler("Ticket not found in the current category", 404);
+      return errorResponse("Ticket not found in the current category", 404);
     }
 
     // Create history entry

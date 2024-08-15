@@ -13,7 +13,7 @@ const updateTicket = async (request: NextRequest) => {
 
     const userId = authenticateUser(request);
     if (!userId) {
-      throw new ErrorHandler("Invalid token", 401);
+      return errorResponse("Invalid token", 401);
     }
 
     const { ticketId, title, description, category, dueDate } =
@@ -27,7 +27,7 @@ const updateTicket = async (request: NextRequest) => {
     }).exec()) as ICategory;
 
     if (!categoryByTicketID) {
-      throw new ErrorHandler("category not found", 404);
+      return errorResponse("category not found", 404);
     }
 
     const ticket = categoryByTicketID.tickets.find(
@@ -35,7 +35,7 @@ const updateTicket = async (request: NextRequest) => {
     );
 
     if (!ticket) {
-      throw new ErrorHandler("Ticket not found in the current category", 404);
+      return errorResponse("Ticket not found in the current category", 404);
     }
 
     // Create the new history entry

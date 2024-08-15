@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      throw new ErrorHandler("Email already exists", 400);
+      return errorResponse("Email already exists", 401);
     }
 
     const newUser = new User({ username, email, password });

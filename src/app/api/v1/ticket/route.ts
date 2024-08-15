@@ -13,7 +13,7 @@ const createTicket = async (request: NextRequest) => {
     const userId = authenticateUser(request);
 
     if (!userId) {
-      throw new ErrorHandler("Invalid token", 401);
+      return errorResponse("Invalid token", 401);
     }
 
     const {
@@ -27,7 +27,7 @@ const createTicket = async (request: NextRequest) => {
     // Fetch the category details
     const categoryDoc = await Category.findById(category).exec();
     if (!categoryDoc) {
-      throw new ErrorHandler("Category not found", 404);
+      return errorResponse("Category not found", 404);
     }
 
     // Create the new history entry

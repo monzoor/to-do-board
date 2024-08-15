@@ -9,6 +9,7 @@ import {
 import { IFormInputs } from "@todo/app/login/types/login";
 import { IFormSignupInputs } from "@todo/app/signup/types/signup";
 import { ErrorHandler, handleError } from "@todo/utils";
+import { ErrorResponse } from "../types/error";
 
 export const authApi = {
   login: async (
@@ -24,9 +25,12 @@ export const authApi = {
       Cookies.set("authToken", token, { expires: 7 }); // Set the cookie with a 7-day expiration
 
       return response.data;
-    } catch (error) {
-      console.error("Login error:", error);
-      return handleError(error);
+    } catch (error: ErrorResponse) {
+      throw {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data?.message,
+      };
     }
   },
 
@@ -39,9 +43,12 @@ export const authApi = {
         data,
       );
       return response.data;
-    } catch (error) {
-      console.error("Signup error:", error);
-      return handleError(error);
+    } catch (error: ErrorResponse) {
+      throw {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data?.message,
+      };
     }
   },
 
@@ -58,9 +65,12 @@ export const authApi = {
       });
 
       return response.data;
-    } catch (error) {
-      console.error("Get user error:", error);
-      return handleError(error);
+    } catch (error: ErrorResponse) {
+      throw {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data?.message,
+      };
     }
   },
 };

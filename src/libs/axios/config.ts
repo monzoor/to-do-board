@@ -36,22 +36,4 @@ api.interceptors.request.use(
   },
 );
 
-// Response interceptor for error handling
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response) {
-      const status = error.response.status;
-
-      if (status === 401) {
-        unauthorized();
-      } else if (status === 422) {
-        apiValidation(error);
-      }
-    }
-
-    return Promise.reject(error);
-  },
-);
-
 export { api };

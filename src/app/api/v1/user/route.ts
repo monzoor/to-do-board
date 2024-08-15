@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     // Extract token from Authorization header
     const authHeader = request.headers.get("Authorization");
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      throw new ErrorHandler("Authorization token missing or malformed", 401);
+      return errorResponse("Authorization token missing or malformed", 401);
     }
 
     const token = authHeader.replace("Bearer ", "");
@@ -21,13 +21,13 @@ export async function GET(request: NextRequest) {
       userId: string;
     };
     if (!decoded.userId) {
-      throw new ErrorHandler("Invalid token", 401);
+      return errorResponse("Invalid token", 401);
     }
 
     // Fetch the user data from the database
     const user = await User.findById(decoded.userId).exec();
     if (!user) {
-      throw new ErrorHandler("User not found", 404);
+      return errorResponse("User not found", 404);
     }
 
     // Return user data
