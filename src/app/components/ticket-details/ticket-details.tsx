@@ -1,7 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { formatDate } from "@todo/utils";
 import { TicketType } from "../ticket/type";
+import { setDrafts } from "@todo/libs/redux/slices/draft/slice";
+import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
+import { Draft } from "@todo/libs/redux/slices/draft/type";
+import { selectDraft } from "@todo/libs/redux/slices/draft/selector/select-draft";
+import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
+import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
+import { ticketApi } from "@todo/api/ticket/ticket-api";
 
 export const TicketDetails = ({
   ticket,
@@ -10,29 +17,117 @@ export const TicketDetails = ({
   ticket: TicketType;
   closeTicketModal: () => void;
 }) => {
-  const { handleSubmit, control, setValue } = useForm({
-    defaultValues: {
-      title: ticket.title,
-      description: ticket.description,
-    },
-  });
+  const dispatch = useAppDispatch();
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
+  const [isEditingDueDate, setIsEditingDueDate] = useState(false);
 
-  const onSubmit = (data: { title: string; description: string }) => {
-    console.log("Updated ticket data:", data);
-    closeTicketModal();
+  const allDrafts = useAppSelector(selectDraft);
+  const currentDraft = allDrafts.find(
+    (draft: Draft) => draft.id === ticket._id,
+  );
+
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    getValues,
+    formState: { isDirty },
+  } = useForm({
+    defaultValues: useMemo(
+      () => ({
+        title: currentDraft?.title || ticket.title,
+        description: currentDraft?.description || ticket.description,
+        dueDate: currentDraft?.dueDate
+          ? formatDate(new Date(currentDraft.dueDate))
+          : ticket.dueDate
+            ? formatDate(ticket.dueDate)
+            : "",
+      }),
+      [ticket, currentDraft],
+    ),
+    shouldUnregister: false,
+  });
+
+  useEffect(() => {
+    if (currentDraft) {
+      setValue("title", currentDraft.title);
+      setValue("description", currentDraft.description);
+      setValue("dueDate", currentDraft.dueDate);
+    }
+  }, [currentDraft, setValue]);
+
+  const onSubmit = async (data: {
+    title: string;
+    description: string;
+    dueDate: string;
+  }) => {
+    if (!ticket._id || !ticket.category) {
+      console.error("Ticket ID or category is missing");
+      return;
+    }
+
+    const updatedDrafts = allDrafts.filter((draft) => draft.id !== ticket._id);
+
+    const newData = {
+      title: data.title,
+      description: data.description,
+      dueDate: new Date(data.dueDate).toISOString(),
+      ticketId: ticket._id,
+      category: ticket.category,
+    };
+
+    try {
+      const response = await ticketApi.updateTicket(newData);
+
+      console.log("------", response);
+
+      if (response.status === "success") {
+        console.log("Ticket updated successfully");
+        dispatch(setDrafts(updatedDrafts));
+        dispatch(getCategories());
+        closeTicketModal();
+      } else {
+        console.error("Failed to update the ticket", response);
+      }
+    } catch (error) {
+      console.error("Error updating the ticket", error);
+    }
   };
 
   const handleDraftSave = () => {
-    console.log("Draft saved");
+    if (isDirty) {
+      const currentValues = getValues();
+
+      if (!ticket._id) {
+        return;
+      }
+
+      const updatedDrafts = allDrafts.filter(
+        (draft) => draft.id !== ticket._id,
+      );
+      updatedDrafts.push({
+        id: ticket._id,
+        title: currentValues.title,
+        description: currentValues.description,
+        dueDate: currentValues.dueDate,
+      });
+
+      dispatch(setDrafts(updatedDrafts));
+      console.log("Draft saved", currentValues);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col items-start bg-slate-200 p-4">
-        <div className="pb-3 font-bold">Title</div>
+        <div className="pb-3 font-bold">
+          Title{" "}
+          {currentDraft?.title &&
+            currentDraft.title !== ticket.title &&
+            "(draft)"}
+        </div>
         <Controller
           name="title"
           control={control}
@@ -49,7 +144,7 @@ export const TicketDetails = ({
                 className="w-full cursor-pointer"
                 onClick={() => setIsEditingTitle(true)}
               >
-                {field.value}
+                {ticket.title}
               </div>
             )
           }
@@ -57,7 +152,12 @@ export const TicketDetails = ({
       </div>
 
       <div className="flex flex-col items-start bg-slate-200 p-4">
-        <div className="pb-3 font-bold">Description</div>
+        <div className="pb-3 font-bold">
+          Description{" "}
+          {currentDraft?.description &&
+            currentDraft.description !== ticket.description &&
+            "(draft)"}
+        </div>
         <Controller
           name="description"
           control={control}
@@ -73,7 +173,7 @@ export const TicketDetails = ({
                 className="w-full cursor-pointer"
                 onClick={() => setIsEditingDescription(true)}
               >
-                {field.value}
+                {ticket.description}
               </div>
             )
           }
@@ -81,6 +181,36 @@ export const TicketDetails = ({
       </div>
 
       <div className="flex flex-col items-start bg-slate-200 p-4">
+        <div className="pb-3 font-bold">
+          Due Date{" "}
+          {currentDraft?.dueDate &&
+            currentDraft.dueDate !== ticket.dueDate &&
+            "(draft)"}
+        </div>
+        <Controller
+          name="dueDate"
+          control={control}
+          render={({ field }) =>
+            isEditingDueDate ? (
+              <input
+                {...field}
+                className="w-full rounded border px-2 py-1"
+                type="date"
+                onBlur={() => setIsEditingDueDate(false)}
+              />
+            ) : (
+              <div
+                className="w-full cursor-pointer"
+                onClick={() => setIsEditingDueDate(true)}
+              >
+                {ticket.dueDate ? formatDate(ticket.dueDate) : "No due date"}
+              </div>
+            )
+          }
+        />
+      </div>
+
+      <div className="flex h-[160px] flex-col items-start overflow-y-auto bg-slate-200 p-4">
         <div className="pb-3 font-bold">History</div>
         <div className="flex-grow">
           {ticket.history?.map((history) => (

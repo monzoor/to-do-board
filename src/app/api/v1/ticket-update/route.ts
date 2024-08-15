@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToMongoDB } from "@todo/app/api/lib";
-import Ticket from "@todo/app/api/model/ticket/ticket.model";
 import { authenticateUser, withAuth } from "@todo/helper";
 import Category from "@todo/app/api/model/category/category.modal";
 import History from "@todo/app/api/model/history/history.modal";
@@ -24,10 +23,11 @@ const updateTicket = async (request: NextRequest) => {
     const categoryObjectId = new Types.ObjectId(category);
 
     const categoryByTicketID = (await Category.findOne({
-      "tickets._id": ticketObjectId,
+      _id: categoryObjectId,
     }).exec()) as ICategory;
+
     if (!categoryByTicketID) {
-      throw new ErrorHandler("Ticket not found", 404);
+      throw new ErrorHandler("category not found", 404);
     }
 
     const ticket = categoryByTicketID.tickets.find(
@@ -38,18 +38,11 @@ const updateTicket = async (request: NextRequest) => {
       throw new ErrorHandler("Ticket not found in the current category", 404);
     }
 
-    const categoryDoc = await Category.findById(categoryObjectId).exec();
-    if (!categoryDoc) {
-      throw new ErrorHandler("Category not found", 404);
-    }
-
-    const previousCategory = ticket.category;
-
     // Create the new history entry
     const historyEntry = {
       userId,
-      previousCategory: previousCategory.toString(),
-      newCategory: categoryDoc.name,
+      previousCategory: categoryByTicketID.name,
+      newCategory: categoryByTicketID.name,
       historyDate: new Date(),
       dueDate: new Date(dueDate),
     };
@@ -68,31 +61,14 @@ const updateTicket = async (request: NextRequest) => {
 
     const updatedTicket = await ticket.save();
 
-    // If the category has changed, update the old and new categories
-    if (previousCategory.toString() !== category) {
-      await Category.findByIdAndUpdate(previousCategory, {
-        $pull: { tickets: { _id: ticketId } },
-      });
-      await Category.findByIdAndUpdate(
-        category,
-        {
-          $push: {
-            tickets: {
-              _id: updatedTicket._id,
-              title: updatedTicket.title,
-              description: updatedTicket.description,
-              assignTo: updatedTicket.assignTo,
-              dueDate: updatedTicket.dueDate,
-              history: updatedTicket.history,
-              category: updatedTicket.category,
-              createdAt: updatedTicket.createdAt,
-              updatedAt: updatedTicket.updatedAt,
-            },
-          },
+    await Category.findByIdAndUpdate(
+      { _id: categoryObjectId, "tickets._id": ticketObjectId },
+      {
+        $set: {
+          tickets: updatedTicket,
         },
-        { new: true },
-      );
-    }
+      },
+    );
 
     return NextResponse.json({
       status: "success",

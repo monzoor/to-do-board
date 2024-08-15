@@ -68,7 +68,7 @@ export const ticketApi = {
           dueDate,
         },
       );
-      return response.data.data;
+      return response.data;
     } catch (error) {
       console.error("Update ticket error:", error);
       throw error;
