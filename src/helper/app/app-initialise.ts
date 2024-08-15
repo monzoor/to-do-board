@@ -1,7 +1,7 @@
-import { authApi } from "@todo/api/auth/auth-api";
-import { categoryApi } from "@todo/api/category/category-api";
-import { UserResponse } from "@todo/api/types";
-import { CategoryResponse } from "@todo/api/types/create-category-response";
+import { authApi } from "@todo/app-api/auth/auth-api";
+import { categoryApi } from "@todo/app-api/category/category-api";
+import { UserResponse } from "@todo/app-api/types";
+import { CategoryResponse } from "@todo/app-api/types/create-category-response";
 import { headers } from "next/headers";
 
 export const appInitialiser = async (): Promise<{

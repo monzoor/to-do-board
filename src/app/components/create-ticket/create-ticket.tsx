@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { createTicketSchema } from "./validation/create-ticket-schema";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { selectCategories } from "@todo/libs/redux/slices/categories/selectors/get-categories";
-import { ticketApi } from "@todo/api/ticket/ticket-api";
+import { ticketApi } from "@todo/app-api/ticket/ticket-api";
 import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
 import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
 

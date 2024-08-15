@@ -8,7 +8,7 @@ import { Draft } from "@todo/libs/redux/slices/draft/type";
 import { selectDraft } from "@todo/libs/redux/slices/draft/selector/select-draft";
 import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
 import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
-import { ticketApi } from "@todo/api/ticket/ticket-api";
+import { ticketApi } from "@todo/app-api/ticket/ticket-api";
 
 export const TicketDetails = ({
   ticket,

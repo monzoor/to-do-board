@@ -1,3 +1,3 @@
-import { SignupResponse } from "@todo/api/types";
+import { SignupResponse } from "@todo/app-api/types";
 
 export type SignUpUser = SignupResponse;

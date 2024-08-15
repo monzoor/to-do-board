@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { authApi } from "@todo/api/auth/auth-api";
+import { authApi } from "@todo/app-api/auth/auth-api";
 import { IFormInputs } from "@todo/app/login/types/login";
 import { IFormSignupInputs } from "@todo/app/signup/types/signup";
 

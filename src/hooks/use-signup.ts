@@ -1,7 +1,7 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { authApi } from "@todo/api/auth/auth-api";
+import { authApi } from "@todo/app-api/auth/auth-api";
 import { IFormSignupInputs } from "@todo/app/signup/types/signup";
 import { signupSchema } from "@todo/app/signup/validation/signup-validation";
 import { useRouter } from "next/navigation";

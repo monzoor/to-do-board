@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { categoryApi } from "@todo/api/category/category-api";
+import { categoryApi } from "@todo/app-api/category/category-api";
 import { ICreateCategoryFormInputs } from "@todo/app/components/create-category/types/create-category-type";
 import { createCategorySchema } from "@todo/app/components/create-category/validation/create-category-validation";
 import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
