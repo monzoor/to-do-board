@@ -8,6 +8,7 @@ import {
 } from "../types";
 import { IFormInputs } from "@todo/app/login/types/login";
 import { IFormSignupInputs } from "@todo/app/signup/types/signup";
+import { ErrorHandler, handleError } from "@todo/utils";
 
 export const authApi = {
   login: async (
@@ -24,9 +25,8 @@ export const authApi = {
 
       return response.data;
     } catch (error) {
-      // Handle or log the error as needed, can be more granular
       console.error("Login error:", error);
-      throw error;
+      return handleError(error);
     }
   },
 
@@ -40,16 +40,15 @@ export const authApi = {
       );
       return response.data;
     } catch (error) {
-      // Handle or log the error as needed, can be more granular
       console.error("Signup error:", error);
-      throw error;
+      return handleError(error);
     }
   },
 
   getUser: async (token: string): Promise<APIResponse<UserResponse>> => {
     try {
       if (!token) {
-        throw new Error("No authentication token found.");
+        throw new ErrorHandler("No authentication token found.", 401);
       }
 
       const response = await api.get<APIResponse<UserResponse>>("/user", {
@@ -60,9 +59,8 @@ export const authApi = {
 
       return response.data;
     } catch (error) {
-      // Handle or log the error as needed
       console.error("Get user error:", error);
-      throw error;
+      return handleError(error);
     }
   },
 };

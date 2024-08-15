@@ -1,5 +1,6 @@
 import { api } from "@todo/libs";
 import { APIResponse, TicketResponse } from "../types";
+import { handleError } from "@todo/utils";
 
 export const ticketApi = {
   moveTicket: async ({
@@ -41,7 +42,7 @@ export const ticketApi = {
       return response.data.data;
     } catch (error) {
       console.error("Create ticket error:", error);
-      throw error;
+      return handleError(error);
     }
   },
   updateTicket: async ({
@@ -71,7 +72,7 @@ export const ticketApi = {
       return response.data;
     } catch (error) {
       console.error("Update ticket error:", error);
-      throw error;
+      return handleError(error);
     }
   },
 };
