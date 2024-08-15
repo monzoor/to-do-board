@@ -1,7 +1,8 @@
 "use client";
 
-import { CategoryCard, Ticket } from "@todo/components";
 import { useDragAndDrop } from "@todo/hooks/use-category-drag-and-drop";
+import { CategoryCard } from "../category";
+import { Ticket } from "../ticket";
 
 export const Container: React.FC = () => {
   const {
