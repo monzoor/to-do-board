@@ -1,4 +1,4 @@
-import { Container } from "@todo/app/components";
+import { Container } from "./components";
 
 export default function Home() {
   return <Container />;

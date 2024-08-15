@@ -5,8 +5,26 @@ import { Categories } from "@todo/types";
 import { ticketApi } from "@todo/app-api/ticket/ticket-api";
 import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
 import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
+import { moveTicketBetweenCategories } from "@todo/utils";
 
-export const useDragAndDrop = () => {
+const findCategoryById = (categoryId: string, categories: Categories) => {
+  return categories.find((cat) => cat._id === categoryId);
+};
+
+export const useDragAndDrop = (): {
+  categories: Categories;
+  draggingCategory: string | null;
+  onDragStart: (
+    e: React.DragEvent<HTMLDivElement>,
+    ticketIndex: number,
+    sourceCategoryId: string,
+  ) => void;
+  onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
+  onDrop: (
+    e: React.DragEvent<HTMLDivElement>,
+    targetCategoryId: string,
+  ) => Promise<void>;
+} => {
   const dispatch = useAppDispatch();
   const categoriesItems = useAppSelector(selectCategories) as Categories;
 
@@ -20,7 +38,7 @@ export const useDragAndDrop = () => {
   // Memoize the categories
   const memoizedCategories = useMemo(() => categories, [categories]);
 
-  const onDragStart = useCallback(
+  const handleDragStart = useCallback(
     (
       e: React.DragEvent<HTMLDivElement>,
       ticketIndex: number,
@@ -33,11 +51,11 @@ export const useDragAndDrop = () => {
     [],
   );
 
-  const onDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   }, []);
 
-  const onDrop = useCallback(
+  const handleDrop = useCallback(
     async (e: React.DragEvent<HTMLDivElement>, targetCategoryId: string) => {
       e.preventDefault();
       const ticketIndex = e.dataTransfer.getData("ticketIndex");
@@ -45,28 +63,25 @@ export const useDragAndDrop = () => {
 
       if (sourceCategoryId === targetCategoryId) return; // Prevent dropping within the same category
 
-      const sourceCategory = memoizedCategories.find(
-        (cat) => cat._id === sourceCategoryId,
+      const sourceCategory = findCategoryById(
+        sourceCategoryId,
+        memoizedCategories,
       );
-      const targetCategory = memoizedCategories.find(
-        (cat) => cat._id === targetCategoryId,
+      const targetCategory = findCategoryById(
+        targetCategoryId,
+        memoizedCategories,
       );
 
       if (!sourceCategory || !targetCategory) return;
 
-      const sourceTickets = [...sourceCategory.tickets];
-      const [removedTicket] = sourceTickets.splice(parseInt(ticketIndex), 1);
-      const targetTickets = [...targetCategory.tickets, removedTicket];
-
-      setCategories(
-        memoizedCategories.map((cat) =>
-          cat._id === sourceCategoryId
-            ? { ...cat, tickets: sourceTickets }
-            : cat._id === targetCategoryId
-              ? { ...cat, tickets: targetTickets }
-              : cat,
-        ),
+      const { updatedCategories, removedTicket } = moveTicketBetweenCategories(
+        sourceCategory,
+        targetCategory,
+        parseInt(ticketIndex),
+        memoizedCategories,
       );
+
+      setCategories(updatedCategories);
       setDraggingCategory(null);
 
       try {
@@ -81,14 +96,14 @@ export const useDragAndDrop = () => {
         console.error("Error moving ticket or fetching categories:", error);
       }
     },
-    [memoizedCategories],
+    [memoizedCategories, dispatch],
   );
 
   return {
     categories,
     draggingCategory,
-    onDragStart,
-    onDragOver,
-    onDrop,
+    onDragStart: handleDragStart,
+    onDragOver: handleDragOver,
+    onDrop: handleDrop,
   };
 };
