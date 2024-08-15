@@ -5,7 +5,6 @@ import { Header } from "@todo/components";
 import { getInitialStoreData } from "@todo/helper";
 
 import StoreProvider from "./components/provider/provider";
-import { CreateActions } from "./components/control-header/control-header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +24,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <StoreProvider initialStoreData={initialStoreData}>
           <Header />
-          <CreateActions />
+
           {children}
         </StoreProvider>
       </body>

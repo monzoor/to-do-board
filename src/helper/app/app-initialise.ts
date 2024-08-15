@@ -32,7 +32,7 @@ export const appInitialiser = async (): Promise<{
     return { user, categories };
   } catch (error) {
     // Handle or log the error as needed
-    console.error("App initialiser error:", error);
+    console.error("App initialiser error:");
     throw error;
   }
 };

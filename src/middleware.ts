@@ -33,7 +33,7 @@ export async function middleware(request: NextRequest) {
 
     return response;
   } catch (error) {
-    console.error("Middleware error:", error);
+    console.error("Middleware error:");
     return NextResponse.redirect(new URL("/login", request.url)); // Redirect on error
   }
 }

@@ -7,7 +7,7 @@ export const getUserIdFromToken = (token: string): string | null => {
     };
     return decoded.userId;
   } catch (error) {
-    console.error("Token verification failed:", error);
+    console.error("Token verification failed:");
     return null;
   }
 };
