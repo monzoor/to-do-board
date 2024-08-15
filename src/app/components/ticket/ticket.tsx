@@ -18,7 +18,6 @@ export const Ticket: React.FC<TicketProps> = ({
   } = useModal();
 
   const onTicketClick = () => {
-    console.log("Ticket clicked");
     openTicketModal();
   };
 

@@ -19,7 +19,6 @@ export const useSignup = () => {
 
   const onSubmit = async (data: IFormSignupInputs) => {
     try {
-      console.log("Signup data:", data);
       await authApi.signup(data);
       router.push("/login"); // Redirect to root URL on success
     } catch (error) {

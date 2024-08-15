@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { getUserIdFromToken } from "@todo/helper";
 import { ErrorHandler } from "@todo/utils";
+import { getUserIdFromToken } from "./get-user-id-from-token";
 
 export const authenticateUser = (request: NextRequest): string => {
   const token = request.headers.get("Authorization")?.replace("Bearer ", "");

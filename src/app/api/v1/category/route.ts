@@ -1,8 +1,8 @@
 import { connectToMongoDB } from "@todo/app/api/lib";
 import Category from "@todo/app/api/model/category/category.modal";
 import { NextRequest, NextResponse } from "next/server";
-import { authenticateUser, withAuth } from "@todo/helper";
 import { ErrorHandler, errorResponse } from "@todo/utils";
+import { authenticateUser, withAuth } from "../../helper";
 
 const createCategory = async (request: NextRequest) => {
   try {

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToMongoDB } from "@todo/app/api/lib";
 import Ticket from "@todo/app/api/model/ticket/ticket.model";
-import { authenticateUser, withAuth } from "@todo/helper";
+import { authenticateUser, withAuth } from "../../helper";
 import Category from "@todo/app/api/model/category/category.modal";
 import History from "@todo/app/api/model/history/history.modal";
 import { ErrorHandler, errorResponse } from "@todo/utils";

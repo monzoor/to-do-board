@@ -81,10 +81,7 @@ export const TicketDetails = ({
     try {
       const response = await ticketApi.updateTicket(newData);
 
-      console.log("------", response);
-
       if (response.status === "success") {
-        console.log("Ticket updated successfully");
         dispatch(setDrafts(updatedDrafts));
         dispatch(getCategories());
         closeTicketModal();
