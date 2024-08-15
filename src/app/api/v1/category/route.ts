@@ -37,6 +37,7 @@ const createCategory = async (request: NextRequest) => {
       name: name.trim(),
       description: description ? description.trim() : "",
       createdAt: new Date(),
+      userId: userId, // Ensure category is associated with the authenticated user
     });
 
     const savedCategory = await newCategory.save();
@@ -64,7 +65,9 @@ const getCategories = async (request: NextRequest) => {
       throw new ErrorHandler("Invalid token", 401);
     }
 
-    const categories = await Category.find().sort({ createdAt: 1 });
+    const categories = await Category.find({ userId: userId }).sort({
+      createdAt: 1,
+    });
 
     return NextResponse.json({
       status: "success",

@@ -7,4 +7,5 @@ export interface ICategory extends Document {
   description?: string;
   tickets: ITicket[];
   createdAt: Date;
+  userId: mongoose.Types.ObjectId;
 }
