@@ -21,7 +21,6 @@ export const useCreateCategory = ({
   });
 
   const onSubmit = async (data: ICreateCategoryFormInputs) => {
-    console.log(data);
     try {
       const response = await categoryApi.createCategory(
         data.name,

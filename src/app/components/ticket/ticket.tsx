@@ -1,17 +1,15 @@
 import { TicketProps } from "./type";
 import { Modal } from "@todo/components";
 import { useModal } from "@todo/hooks/use-modal";
-import { useTicket } from "@todo/hooks/useTicket";
 import { TicketDetails } from "../ticket-details/ticket-details";
+import { getDueDateStatus } from "@todo/utils";
 
 export const Ticket: React.FC<TicketProps> = ({
   ticket,
   index,
   onDragStart,
 }) => {
-  const { getDueDateStatus } = useTicket();
-  const status = getDueDateStatus(ticket.dueDate)?.status;
-  const color = getDueDateStatus(ticket.dueDate)?.color;
+  const { status, color } = getDueDateStatus(ticket.dueDate);
 
   const {
     isVisible: isTicketModalVisible,
