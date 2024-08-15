@@ -112,7 +112,6 @@ export const TicketDetails = ({
       });
 
       dispatch(setDrafts(updatedDrafts));
-      console.log("Draft saved", currentValues);
     }
   };
 
