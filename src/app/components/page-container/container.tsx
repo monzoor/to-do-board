@@ -5,14 +5,8 @@ import { CategoryCard } from "../category";
 import { Ticket } from "../ticket";
 
 export const Container: React.FC = () => {
-  const {
-    categories,
-    draggingCategory,
-    onDragStart,
-    onDragOver,
-    onDrop,
-    getStatus,
-  } = useDragAndDrop();
+  const { categories, draggingCategory, onDragStart, onDragOver, onDrop } =
+    useDragAndDrop();
 
   return (
     <div className="container mx-auto overflow-hidden py-10 pl-5">
@@ -32,7 +26,6 @@ export const Container: React.FC = () => {
                 ticket={ticket}
                 index={index}
                 onDragStart={(e) => onDragStart(e, index, category._id)}
-                getStatus={getStatus}
               />
             ))}
           </CategoryCard>
