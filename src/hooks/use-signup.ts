@@ -4,20 +4,30 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { authApi } from "@todo/app-api/auth/auth-api";
 import { IFormSignupInputs } from "@todo/app/signup/types/signup";
 import { signupSchema } from "@todo/app/signup/validation/signup-validation";
-import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
+import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
+import { resetUser } from "@todo/libs/redux/slices/user";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import {
+  FieldErrors,
+  SubmitHandler,
+  useForm,
+  UseFormRegister,
+} from "react-hook-form";
 
 export const useSignup = (): {
-  register: any;
-  handleSubmit: any;
-  errors: any;
-  onSubmit: any;
+  register: UseFormRegister<IFormSignupInputs>;
+  handleSubmit: (
+    callback: SubmitHandler<IFormSignupInputs>,
+  ) => (e?: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  errors: FieldErrors<IFormSignupInputs>;
+  onSubmit: SubmitHandler<IFormSignupInputs>;
   isLoading: boolean;
 } => {
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useAppDispatch();
   const router = useRouter();
-  const user = useAppSelector((state) => state.user);
+
   const {
     register,
     handleSubmit,
@@ -28,22 +38,29 @@ export const useSignup = (): {
   });
 
   useEffect(() => {
-    if (user.data) {
-      router.push("/login");
-    }
-  }, [user.data]);
-
-  useEffect(() => {
-    if (user.errorOccurred) {
-      setError("email", {
-        type: "manual",
-        message: "Email already exists",
-      });
-    }
-  }, [user.errorOccurred]);
+    return () => {
+      dispatch(resetUser());
+    };
+  }, [dispatch]);
 
   const onSubmit = async (data: IFormSignupInputs) => {
-    await authApi.signup(data);
+    if (isLoading) return;
+
+    setIsLoading(true);
+
+    try {
+      const response = await authApi.signup(data);
+      if (response?.data) {
+        router.push("/login");
+      }
+    } catch (error: any) {
+      setError("email", {
+        type: "manual",
+        message: error?.data,
+      });
+    } finally {
+      setIsLoading(false); // Stop loading
+    }
   };
 
   return {
@@ -51,6 +68,6 @@ export const useSignup = (): {
     handleSubmit,
     errors,
     onSubmit,
-    isLoading: user?.requested,
+    isLoading,
   };
 };

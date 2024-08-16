@@ -3,23 +3,28 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IFormInputs } from "@todo/app/login/types/login";
 import { loginSchema } from "@todo/app/login/validation/login-validation";
+import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
-import { authUser } from "@todo/libs/redux/slices/user";
-import { AppDispatch } from "@todo/libs/redux/types/app-dispatch";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { authUser, resetUser } from "@todo/libs/redux/slices/user";
+import { useEffect, useState } from "react";
+import {
+  FieldErrors,
+  SubmitHandler,
+  useForm,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from "react-hook-form";
 
 export const useLogin = (): {
-  register: any;
-  handleSubmit: any;
-  errors: any;
-  onSubmit: any;
+  register: UseFormRegister<IFormInputs>;
+  handleSubmit: UseFormHandleSubmit<IFormInputs>;
+  errors: FieldErrors<IFormInputs>;
+  onSubmit: SubmitHandler<IFormInputs>;
   hasError: boolean;
   isLoading: boolean;
 } => {
-  const dispatch = useDispatch<AppDispatch>();
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
   useEffect(() => {
@@ -27,6 +32,18 @@ export const useLogin = (): {
       window.location.href = "/";
     }
   }, [user.data]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetUser());
+    };
+  }, []);
+
+  useEffect(() => {
+    if (user.errorOccurred) {
+      setIsSubmitting(false);
+    }
+  }, [user.errorOccurred]);
 
   const {
     register,
@@ -37,6 +54,7 @@ export const useLogin = (): {
   });
 
   const onSubmit = async (data: IFormInputs) => {
+    setIsSubmitting(true);
     await dispatch(authUser(data));
   };
 
@@ -46,6 +64,6 @@ export const useLogin = (): {
     errors,
     onSubmit,
     hasError: !!(user && user?.errorOccurred),
-    isLoading: user?.requested,
+    isLoading: isSubmitting,
   };
 };
