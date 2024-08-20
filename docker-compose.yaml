@@ -14,7 +14,6 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3003
-      - MONGO_DB_URI=mongodb://mongo:27017/todo_board
     ports:
       - "3003:3003"
     volumes:
@@ -35,7 +34,6 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3000
-      - MONGO_DB_URI=mongodb://mongo:27017/todo_board
     ports:
       - "3000:3000"
     volumes:

@@ -62,6 +62,7 @@ export const SignUpContainer = () => {
       </div>
 
       <button
+        disabled={isLoading}
         type="submit"
         className="focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4"
       >
@@ -90,7 +91,7 @@ export const SignUpContainer = () => {
         Already have an account{" "}
         <a
           onClick={() => router.push("/login")}
-          className="text-primary-600 dark:text-primary-500 font-medium hover:underline"
+          className="text-primary-600 dark:text-primary-500 cursor-pointer font-medium hover:underline"
         >
           Login
         </a>
