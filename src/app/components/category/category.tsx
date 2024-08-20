@@ -25,7 +25,7 @@ export const CategoryCard: React.FC<CategoryProps> = ({
 
   return (
     <div
-      className="category item relative flex min-h-[300px] w-80 flex-col border border-gray-200 bg-white"
+      className="category item relative flex min-h-[300px] w-80 min-w-[300px] flex-col border border-gray-200 bg-white"
       onDrop={(e) => {
         onDrop(e, categoryId);
         setIsDraggingOver(false);

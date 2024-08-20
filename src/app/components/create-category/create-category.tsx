@@ -5,9 +5,10 @@ export const CreateCategory = ({
 }: {
   closeCategoryModal: () => void;
 }) => {
-  const { register, handleSubmit, errors, onSubmit } = useCreateCategory({
-    closeCategoryModal,
-  });
+  const { register, handleSubmit, errors, onSubmit, isSubmitting } =
+    useCreateCategory({
+      closeCategoryModal,
+    });
 
   return (
     <div>
@@ -61,6 +62,7 @@ export const CreateCategory = ({
             Close
           </button>
           <button
+            disabled={isSubmitting}
             className="mb-1 mr-1 rounded bg-emerald-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-emerald-600"
             type="submit"
           >

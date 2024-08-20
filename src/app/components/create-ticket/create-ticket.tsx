@@ -5,10 +5,16 @@ export const CreateTicket = ({
 }: {
   closeTicketModal: () => void;
 }) => {
-  const { register, handleSubmit, errors, onSubmit, getCategoriesList } =
-    useCreateTicket({
-      closeTicketModal,
-    });
+  const {
+    register,
+    handleSubmit,
+    errors,
+    onSubmit,
+    getCategoriesList,
+    loading,
+  } = useCreateTicket({
+    closeTicketModal,
+  });
 
   return (
     <div>
@@ -104,6 +110,7 @@ export const CreateTicket = ({
             Close
           </button>
           <button
+            disabled={loading}
             className="mb-1 mr-1 rounded bg-emerald-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-emerald-600"
             type="submit"
           >

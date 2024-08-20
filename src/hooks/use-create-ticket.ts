@@ -1,4 +1,11 @@
-import { useForm } from "react-hook-form";
+import { useState } from "react";
+import {
+  FieldErrors,
+  SubmitHandler,
+  useForm,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { selectCategories } from "@todo/libs/redux/slices/categories/selectors/get-categories";
@@ -12,19 +19,23 @@ export const useCreateTicket = ({
   closeTicketModal,
 }: {
   closeTicketModal: () => void;
-}) => {
+}): {
+  register: UseFormRegister<ICreateTicketFormInputs>;
+  handleSubmit: UseFormHandleSubmit<ICreateTicketFormInputs>;
+  errors: FieldErrors<ICreateTicketFormInputs>;
+  onSubmit: SubmitHandler<ICreateTicketFormInputs>;
+  loading: boolean;
+  getCategoriesList: { label: string; value: string }[];
+} => {
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
 
   const categoriesItems = useAppSelector(selectCategories);
   const getCategoriesList =
-    (categoriesItems &&
-      categoriesItems.map((category) => {
-        return {
-          label: category.name,
-          value: category._id,
-        };
-      })) ||
-    [];
+    categoriesItems?.map((category) => ({
+      label: category.name,
+      value: category._id,
+    })) || [];
 
   const {
     register,
@@ -35,14 +46,23 @@ export const useCreateTicket = ({
   });
 
   const onSubmit = async (data: ICreateTicketFormInputs) => {
-    const newData = {
-      ...data,
-      dueDate: new Date(data.dueDate).toISOString(),
-    };
-    const response = await ticketApi.createTicket(newData);
-    if (response) {
-      dispatch(getCategories());
-      closeTicketModal();
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      const newData = {
+        ...data,
+        dueDate: new Date(data.dueDate).toISOString(),
+      };
+      const response = await ticketApi.createTicket(newData);
+      if (response) {
+        dispatch(getCategories());
+        closeTicketModal();
+      }
+    } catch (error) {
+      console.error("Failed to create ticket", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,5 +72,6 @@ export const useCreateTicket = ({
     errors,
     onSubmit,
     getCategoriesList,
+    loading,
   };
 };
