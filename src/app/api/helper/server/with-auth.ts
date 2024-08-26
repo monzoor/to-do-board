@@ -9,7 +9,7 @@ export const withAuth = (
     if (!token) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    request.headers.set("userId", token.userId);
+    // request.headers.set("userId", token.userId);
     return handler(request);
   };
 };

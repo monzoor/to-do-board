@@ -1,5 +1,6 @@
 "use client";
 
+import { URLS } from "@todo/contants";
 import { useLogin } from "@todo/hooks/use-login";
 import { useRouter } from "next/navigation";
 
@@ -78,12 +79,13 @@ export const LoginContainer = () => {
       </button>
       <p className="text-sm font-light text-gray-500 dark:text-gray-400">
         Don’t have an account yet?{" "}
-        <a
+        <button
+          type="button"
           className="text-primary-600 dark:text-primary-500 cursor-pointer font-medium hover:underline"
-          onClick={() => router.push("/signup")}
+          onClick={() => router.push(URLS.SIGNUP)}
         >
           Sign up
-        </a>
+        </button>
       </p>
     </form>
   );
