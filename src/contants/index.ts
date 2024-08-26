@@ -1,1 +1,1 @@
-export { URLS } from "./urls";
+export { URLS, API_URLS } from "./urls";

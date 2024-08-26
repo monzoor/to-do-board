@@ -10,6 +10,7 @@ import { IFormInputs } from "@todo/app/login/types/login";
 import { IFormSignupInputs } from "@todo/app/signup/types/signup";
 import { ErrorHandler } from "@todo/utils";
 import { ErrorResponse } from "../types/error";
+import { API_URLS } from "@todo/contants";
 
 export const authApi = {
   login: async (
@@ -17,7 +18,7 @@ export const authApi = {
   ): Promise<APIResponse<LoginResponse>> => {
     try {
       const response = await api.post<APIResponse<LoginResponse>>(
-        "/login",
+        API_URLS.LOGIN,
         credentials,
       );
       // Set the authToken cookie
@@ -39,7 +40,7 @@ export const authApi = {
   ): Promise<APIResponse<SignupResponse>> => {
     try {
       const response = await api.post<APIResponse<SignupResponse>>(
-        "/signup",
+        API_URLS.SIGNUP,
         data,
       );
       return response.data;
@@ -58,7 +59,7 @@ export const authApi = {
         throw new ErrorHandler("No authentication token found.", 401);
       }
 
-      const response = await api.get<APIResponse<UserResponse>>("/user", {
+      const response = await api.get<APIResponse<UserResponse>>(API_URLS.USER, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

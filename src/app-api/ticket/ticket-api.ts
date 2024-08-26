@@ -1,6 +1,7 @@
 import { api } from "@todo/libs";
 import { APIResponse, TicketResponse } from "../types";
 import { handleError } from "@todo/utils";
+import { API_URLS } from "@todo/contants";
 
 export const ticketApi = {
   moveTicket: async ({
@@ -11,10 +12,13 @@ export const ticketApi = {
     newCategoryId: string;
   }) => {
     try {
-      const response = await api.post<APIResponse<TicketResponse>>("/move", {
-        ticketId,
-        newCategoryId,
-      });
+      const response = await api.post<APIResponse<TicketResponse>>(
+        API_URLS.MOVE,
+        {
+          ticketId,
+          newCategoryId,
+        },
+      );
       return response.data.data;
     } catch (error) {
       console.error("Move ticket error:", error);
@@ -33,12 +37,15 @@ export const ticketApi = {
     dueDate: string;
   }) => {
     try {
-      const response = await api.post<APIResponse<TicketResponse>>("/ticket", {
-        title,
-        description,
-        category,
-        dueDate,
-      });
+      const response = await api.post<APIResponse<TicketResponse>>(
+        API_URLS.TICKET,
+        {
+          title,
+          description,
+          category,
+          dueDate,
+        },
+      );
       return response.data.data;
     } catch (error) {
       console.error("Create ticket error:", error);
@@ -60,7 +67,7 @@ export const ticketApi = {
   }) => {
     try {
       const response = await api.patch<APIResponse<TicketResponse>>(
-        "/ticket-update",
+        API_URLS.TICKET,
         {
           ticketId,
           title,

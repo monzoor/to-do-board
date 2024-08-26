@@ -4,12 +4,13 @@ import { CategoryResponse } from "../types/create-category-response";
 import { AxiosRequestConfig } from "axios";
 import { handleError } from "@todo/utils";
 import { ErrorResponse } from "../types/error";
+import { API_URLS } from "@todo/contants";
 
 export const categoryApi = {
   createCategory: async (name: string, description: string) => {
     try {
       const response = await api.post<APIResponse<CategoryResponse>>(
-        "/category",
+        API_URLS.CATEGORY,
         {
           name,
           description,
@@ -24,7 +25,7 @@ export const categoryApi = {
   getCategories: async (config?: AxiosRequestConfig | null | {}) => {
     try {
       const response = await api.get<APIResponse<CategoryResponse[]>>(
-        "/categoy",
+        API_URLS.CATEGORY,
         config || {},
       );
       return response.data.data;
