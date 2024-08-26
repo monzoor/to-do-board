@@ -11,7 +11,7 @@ const moveTicket = async (request: NextRequest) => {
   try {
     await connectToMongoDB();
 
-    const userId = authenticateUser(request);
+    const userId = authenticateUser(request)?.userId;
 
     if (!userId) {
       return errorResponse("Invalid token", 401);

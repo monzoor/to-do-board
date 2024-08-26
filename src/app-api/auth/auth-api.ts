@@ -8,7 +8,7 @@ import {
 } from "../types";
 import { IFormInputs } from "@todo/app/login/types/login";
 import { IFormSignupInputs } from "@todo/app/signup/types/signup";
-import { ErrorHandler, handleError } from "@todo/utils";
+import { ErrorHandler } from "@todo/utils";
 import { ErrorResponse } from "../types/error";
 
 export const authApi = {
@@ -66,6 +66,11 @@ export const authApi = {
 
       return response.data;
     } catch (error: ErrorResponse) {
+      console.log("--e---", {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data?.message,
+      });
       throw {
         message: error.message,
         status: error.response?.status,

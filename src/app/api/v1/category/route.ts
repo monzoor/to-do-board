@@ -8,7 +8,7 @@ const createCategory = async (request: NextRequest) => {
   try {
     await connectToMongoDB();
 
-    const userId = authenticateUser(request);
+    const userId = authenticateUser(request)?.userId;
 
     if (!userId) {
       throw new ErrorHandler("Invalid token", 401);
@@ -59,7 +59,7 @@ const getCategories = async (request: NextRequest) => {
   try {
     await connectToMongoDB();
 
-    const userId = authenticateUser(request);
+    const userId = authenticateUser(request)?.userId;
 
     if (!userId) {
       throw new ErrorHandler("Invalid token", 401);

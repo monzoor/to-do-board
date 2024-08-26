@@ -1,3 +1,6 @@
+import { NextResponse } from "next/server";
+import { errorResponse } from "./error-response";
+
 class ErrorHandler extends Error {
   constructor(
     message: string,
@@ -8,14 +11,14 @@ class ErrorHandler extends Error {
   }
 }
 
-export const handleError = (error: unknown): never => {
+export const handleError = (error: unknown): NextResponse => {
   if (error instanceof ErrorHandler) {
-    throw error;
+    return errorResponse(error.message, error.status as number);
   }
 
   if (error instanceof Error) {
-    throw new ErrorHandler(error.message, 400); // Assuming 400 for client-side errors
+    return errorResponse(error.message, 400); // Assuming 400 for client-side errors
   }
 
-  throw new ErrorHandler("An unknown error occurred.", 500);
+  return errorResponse("An unknown error occurred.", 500);
 };

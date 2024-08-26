@@ -1,13 +1,15 @@
+import { ErrorHandler } from "@todo/utils";
 import jwt from "jsonwebtoken";
 
-export const getUserIdFromToken = (token: string): string | null => {
+export interface User {
+  userId: string;
+}
+
+export const getUserIdFromToken = (token: string): User | null => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
-      userId: string;
-    };
-    return decoded.userId;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as User;
+    return decoded;
   } catch (error) {
-    console.error("Token verification failed:");
-    return null;
+    throw new ErrorHandler("Invalid token", 401);
   }
 };
