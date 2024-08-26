@@ -3,6 +3,7 @@ import { APIResponse } from "../types";
 import { CategoryResponse } from "../types/create-category-response";
 import { AxiosRequestConfig } from "axios";
 import { handleError } from "@todo/utils";
+import { ErrorResponse } from "../types/error";
 
 export const categoryApi = {
   createCategory: async (name: string, description: string) => {
@@ -23,13 +24,17 @@ export const categoryApi = {
   getCategories: async (config?: AxiosRequestConfig | null | {}) => {
     try {
       const response = await api.get<APIResponse<CategoryResponse[]>>(
-        "/category",
+        "/categoy",
         config || {},
       );
       return response.data.data;
-    } catch (error) {
+    } catch (error: ErrorResponse) {
       console.error("Get categories error:", error);
-      return handleError(error);
+      throw {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data?.message,
+      };
     }
   },
 };
