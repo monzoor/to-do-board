@@ -93,7 +93,7 @@ export const useDragAndDrop = (): {
         // Dispatch getCategories to update categories in the state
         dispatch(getCategories());
       } catch (error) {
-        console.error("Error moving ticket or fetching categories:", error);
+        console.error("Error moving ticket or fetching categories:");
       }
     },
     [memoizedCategories, dispatch],

@@ -86,7 +86,7 @@ export const useTicketDetails = (
         console.error("Failed to update the ticket", response);
       }
     } catch (error) {
-      console.error("Error updating the ticket", error);
+      console.error("Error updating the ticket");
     }
   };
 

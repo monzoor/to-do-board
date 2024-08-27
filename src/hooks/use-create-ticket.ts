@@ -60,7 +60,7 @@ export const useCreateTicket = ({
         closeTicketModal();
       }
     } catch (error) {
-      console.error("Failed to create ticket", error);
+      console.error("Failed to create ticket");
     } finally {
       setLoading(false);
     }

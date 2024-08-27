@@ -57,7 +57,7 @@ export const useCreateCategory = ({
         closeCategoryModal();
       }
     } catch (error) {
-      console.error("Failed to create category", error);
+      console.error("Failed to create category");
       throw new Error("Failed to create category");
     } finally {
       setIsSubmitting(false);

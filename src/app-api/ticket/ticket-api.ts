@@ -21,7 +21,7 @@ export const ticketApi = {
       );
       return response.data.data;
     } catch (error) {
-      console.error("Move ticket error:", error);
+      console.error("Move ticket error:");
       throw error;
     }
   },
@@ -48,7 +48,7 @@ export const ticketApi = {
       );
       return response.data.data;
     } catch (error) {
-      console.error("Create ticket error:", error);
+      console.error("Create ticket error:");
       return handleError(error);
     }
   },
@@ -78,7 +78,7 @@ export const ticketApi = {
       );
       return response.data;
     } catch (error) {
-      console.error("Update ticket error:", error);
+      console.error("Update ticket error:");
       return handleError(error);
     }
   },
