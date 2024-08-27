@@ -16,23 +16,15 @@ export const authApi = {
   login: async (
     credentials: IFormInputs,
   ): Promise<APIResponse<LoginResponse>> => {
-    try {
-      const response = await api.post<APIResponse<LoginResponse>>(
-        API_URLS.LOGIN,
-        credentials,
-      );
-      // Set the authToken cookie
-      const { token } = response.data.data;
-      Cookies.set("authToken", token, { expires: 7 }); // Set the cookie with a 7-day expiration
+    const response = await api.post<APIResponse<LoginResponse>>(
+      API_URLS.LOGIN,
+      credentials,
+    );
+    // Set the authToken cookie
+    const { token } = response.data.data;
+    Cookies.set("authToken", token, { expires: 7 }); // Set the cookie with a 7-day expiration
 
-      return response.data;
-    } catch (error: ErrorResponse) {
-      throw {
-        message: error.message,
-        status: error.response?.status,
-        data: error.response?.data?.message,
-      };
-    }
+    return response.data;
   },
 
   signup: async (
@@ -54,29 +46,12 @@ export const authApi = {
   },
 
   getUser: async (token: string): Promise<APIResponse<UserResponse>> => {
-    try {
-      if (!token) {
-        throw new ErrorHandler("No authentication token found.", 401);
-      }
+    const response = await api.get<APIResponse<UserResponse>>(API_URLS.USER, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      const response = await api.get<APIResponse<UserResponse>>(API_URLS.USER, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      return response.data;
-    } catch (error: ErrorResponse) {
-      console.log("--e---", {
-        message: error.message,
-        status: error.response?.status,
-        data: error.response?.data?.message,
-      });
-      throw {
-        message: error.message,
-        status: error.response?.status,
-        data: error.response?.data?.message,
-      };
-    }
+    return response.data;
   },
 };

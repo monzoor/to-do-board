@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToMongoDB } from "@todo/app/api/lib";
-import { ErrorHandler } from "@todo/utils";
+import { ErrorHandler, errorResponse } from "@todo/utils";
 import { authenticateUser } from "../../helper";
 
 export async function GET(request: NextRequest, response: NextResponse) {
@@ -22,6 +22,6 @@ export async function GET(request: NextRequest, response: NextResponse) {
       },
     });
   } catch (error) {
-    throw new ErrorHandler("Invalid token", 401);
+    return errorResponse("Invalid token", 401);
   }
 }

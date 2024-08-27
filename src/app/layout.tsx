@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@todo/components";
 import { getInitialStoreData } from "@todo/helper";
+import { Toaster } from "react-hot-toast";
 
 import StoreProvider from "./components/provider/provider";
 import ErrorBoundary from "@todo/components/error-boundary/error-boundary";
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <StoreProvider initialStoreData={initialStoreData}>
+          <Toaster />
           <Header />
           <ErrorBoundary>{children}</ErrorBoundary>
         </StoreProvider>
