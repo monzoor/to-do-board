@@ -1,6 +1,5 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { clientErrorHandler } from "@todo/utils/errors";
 
 // Base URL for API
 const baseURL =
