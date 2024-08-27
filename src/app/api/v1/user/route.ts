@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToMongoDB } from "@todo/app/api/lib";
-import { errorResponse, handleError } from "@todo/utils";
+import { ErrorHandler } from "@todo/utils";
 import { authenticateUser } from "../../helper";
 
 export async function GET(request: NextRequest, response: NextResponse) {
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
 
     if (!user) {
       response.cookies.set("authToken", "", { expires: new Date(0) });
-      return errorResponse("User not found", 404);
+      throw new ErrorHandler("User not found", 404);
     }
 
     // Return user data
@@ -22,6 +22,6 @@ export async function GET(request: NextRequest, response: NextResponse) {
       },
     });
   } catch (error) {
-    return handleError(error);
+    throw new ErrorHandler("Invalid token", 401);
   }
 }
