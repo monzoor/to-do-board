@@ -5,6 +5,7 @@ import { Header } from "@todo/components";
 import { getInitialStoreData } from "@todo/helper";
 
 import StoreProvider from "./components/provider/provider";
+import ErrorBoundary from "@todo/components/error-boundary/error-boundary";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,8 +25,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <StoreProvider initialStoreData={initialStoreData}>
           <Header />
-
-          {children}
+          <ErrorBoundary>{children}</ErrorBoundary>
         </StoreProvider>
       </body>
     </html>

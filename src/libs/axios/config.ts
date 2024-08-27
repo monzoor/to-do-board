@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { apiValidation, unauthorized } from "./catcher";
+import { clientErrorHandler } from "@todo/utils/errors";
 
 // Base URL for API
 const baseURL =
@@ -33,6 +34,13 @@ api.interceptors.request.use(
   (error) => {
     console.error("Request error:", error);
     return Promise.reject(error);
+  },
+);
+
+api.interceptors.response.use(
+  (response) => response, // Pass successful responses through
+  (error) => {
+    clientErrorHandler(error); // Call handleError for any errors
   },
 );
 

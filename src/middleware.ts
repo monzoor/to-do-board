@@ -36,8 +36,9 @@ export async function middleware(request: NextRequest) {
       console.error("Error during appInitialiser:", error);
 
       // Clear the auth token cookie to avoid the loop
-      const response = NextResponse.redirect(new URL(URLS.LOGIN, request.url));
-      response.cookies.set("authToken", "", { expires: new Date(0) });
+      // const response = NextResponse.redirect(new URL(URLS.LOGIN, request.url));
+      const response = NextResponse.next();
+      // response.cookies.set("authToken", "", { expires: new Date(0) });
       return response;
     }
   }
