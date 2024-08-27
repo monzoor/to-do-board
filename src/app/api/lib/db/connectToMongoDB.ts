@@ -1,5 +1,5 @@
-import { ErrorHandler } from "@todo/utils";
 import mongoose, { Connection, ConnectOptions } from "mongoose";
+import { ErrorHandler } from "../../utils";
 
 const DB_URI = process.env.MONGO_DB_URI;
 

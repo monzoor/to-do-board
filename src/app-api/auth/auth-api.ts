@@ -8,7 +8,6 @@ import {
 } from "../types";
 import { IFormInputs } from "@todo/app/login/types/login";
 import { IFormSignupInputs } from "@todo/app/signup/types/signup";
-import { ErrorHandler } from "@todo/utils";
 import { ErrorResponse } from "../types/error";
 import { API_URLS } from "@todo/contants";
 

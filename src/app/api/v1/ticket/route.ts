@@ -4,7 +4,7 @@ import Ticket from "@todo/app/api/model/ticket/ticket.model";
 import { authenticateUser, withAuth } from "../../helper";
 import Category from "@todo/app/api/model/category/category.modal";
 import History from "@todo/app/api/model/history/history.modal";
-import { ErrorHandler, errorResponse } from "@todo/utils";
+import { ErrorHandler, errorResponse } from "../../utils";
 
 const createTicket = async (request: NextRequest) => {
   try {

@@ -1,5 +1,5 @@
-import { ErrorHandler } from "@todo/utils";
 import jwt from "jsonwebtoken";
+import { ErrorHandler } from "../../utils";
 
 export interface User {
   userId: string;

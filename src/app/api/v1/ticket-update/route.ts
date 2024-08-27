@@ -3,7 +3,7 @@ import { connectToMongoDB } from "@todo/app/api/lib";
 import { authenticateUser, withAuth } from "../../helper";
 import Category from "@todo/app/api/model/category/category.modal";
 import History from "@todo/app/api/model/history/history.modal";
-import { ErrorHandler, errorResponse } from "@todo/utils";
+import { ErrorHandler, errorResponse } from "../../utils";
 import { Types } from "mongoose";
 import { ICategory } from "../../types/category";
 

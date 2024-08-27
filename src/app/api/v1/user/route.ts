@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToMongoDB } from "@todo/app/api/lib";
-import { ErrorHandler, errorResponse } from "@todo/utils";
 import { authenticateUser } from "../../helper";
+import { ErrorHandler, errorResponse } from "../../utils";
 
 export async function GET(request: NextRequest, response: NextResponse) {
   try {

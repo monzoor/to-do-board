@@ -5,7 +5,7 @@ import { IHistory } from "@todo/app/api/types/history";
 import Category from "@todo/app/api/model/category/category.modal";
 import { Schema, Types } from "mongoose";
 import { ICategory } from "@todo/app/api/types/category";
-import { ErrorHandler, errorResponse } from "@todo/utils";
+import { ErrorHandler, errorResponse } from "../../utils";
 
 const moveTicket = async (request: NextRequest) => {
   try {

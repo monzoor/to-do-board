@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { ErrorHandler } from "@todo/utils";
 import { getUserIdFromToken, User } from "./get-user-id-from-token";
+import { ErrorHandler } from "../../utils";
 
 export const authenticateUser = (request: NextRequest): User => {
   // Extract token from Authorization header
