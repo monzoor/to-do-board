@@ -2,21 +2,13 @@ import { api } from "@todo/libs";
 import { APIResponse } from "../types";
 import { CategoryResponse } from "../types/create-category-response";
 import { AxiosRequestConfig } from "axios";
-import { handleError } from "@todo/utils";
-import { ErrorResponse } from "../types/error";
 import { API_URLS } from "@todo/contants";
+import { ICreateCategoryFormInputs } from "@todo/app/components/create-category/types/create-category-type";
 
 export const categoryApi = {
-  createCategory: async ({
-    name,
-    description,
-  }: {
-    name: string;
-    description: string;
-  }) => {
+  createCategory: async ({ name, description }: ICreateCategoryFormInputs) => {
     const response = await api.post<APIResponse<CategoryResponse>>(
-      // API_URLS.CATEGORY,
-      "/asdas",
+      API_URLS.CATEGORY,
       {
         name,
         description,

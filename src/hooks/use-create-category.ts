@@ -12,27 +12,35 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
 } from "react-hook-form";
-import { selectCategoryRequested } from "@todo/libs/redux/slices/categories/selectors/get-category-requested";
 import {
   createCategory,
   resetCreateCategories,
+  selectCreateCategoryErrorOccurred,
+  selectCreateCategoryRequested,
 } from "@todo/libs/redux/slices/create-categories";
+import toast from "react-hot-toast";
 
-export const useCreateCategory = ({
-  closeCategoryModal,
-}: {
+interface UseCreateCategoryProps {
   closeCategoryModal: () => void;
-}): {
+}
+
+interface UseCreateCategoryReturn {
   register: UseFormRegister<ICreateCategoryFormInputs>;
   handleSubmit: UseFormHandleSubmit<ICreateCategoryFormInputs>;
   errors: FieldErrors<ICreateCategoryFormInputs>;
   onSubmit: SubmitHandler<ICreateCategoryFormInputs>;
   isSubmitting: boolean;
-} => {
-  const isRequested = useAppSelector(selectCategoryRequested);
+}
+
+export const useCreateCategory = ({
+  closeCategoryModal,
+}: UseCreateCategoryProps): UseCreateCategoryReturn => {
+  const dispatch = useAppDispatch();
+  const isRequested = useAppSelector(selectCreateCategoryRequested);
+  const hasError = useAppSelector(selectCreateCategoryErrorOccurred);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -45,14 +53,26 @@ export const useCreateCategory = ({
     setIsSubmitting(isRequested);
   }, [isRequested]);
 
+  useEffect(() => {
+    if (hasError) {
+      toast.error("Something went wrong");
+      setIsSubmitting(false);
+    }
+  }, [hasError]);
+
   const onSubmit: SubmitHandler<ICreateCategoryFormInputs> = async (data) => {
     if (isSubmitting) return;
 
     setIsSubmitting(true);
+
     await dispatch(createCategory(data));
-    await dispatch(getCategories());
-    dispatch(resetCreateCategories());
-    closeCategoryModal();
+
+    if (!hasError) {
+      await dispatch(getCategories());
+      dispatch(resetCreateCategories());
+      closeCategoryModal();
+    }
+
     setIsSubmitting(false);
   };
 
