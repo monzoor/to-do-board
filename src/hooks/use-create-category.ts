@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { categoryApi } from "@todo/app-api/category/category-api";
 import { ICreateCategoryFormInputs } from "@todo/app/components/create-category/types/create-category-type";
 import { createCategorySchema } from "@todo/app/components/create-category/validation/create-category-validation";
 import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
@@ -14,6 +13,10 @@ import {
   UseFormRegister,
 } from "react-hook-form";
 import { selectCategoryRequested } from "@todo/libs/redux/slices/categories/selectors/get-category-requested";
+import {
+  createCategory,
+  resetCreateCategories,
+} from "@todo/libs/redux/slices/create-categories";
 
 export const useCreateCategory = ({
   closeCategoryModal,
@@ -46,22 +49,26 @@ export const useCreateCategory = ({
     if (isSubmitting) return;
 
     setIsSubmitting(true);
+    await dispatch(createCategory(data));
+    await dispatch(getCategories());
+    dispatch(resetCreateCategories());
+    closeCategoryModal();
+    setIsSubmitting(false);
 
-    try {
-      const response = await categoryApi.createCategory(
-        data.name,
-        data.description,
-      );
-      if (response.status === "success") {
-        dispatch(getCategories());
-        closeCategoryModal();
-      }
-    } catch (error) {
-      console.error("Failed to create category");
-      throw new Error("Failed to create category");
-    } finally {
-      setIsSubmitting(false);
-    }
+    // setIsSubmitting(true);
+
+    // try {
+    //   const response = await categoryApi.createCategory(data);
+    //   if (response.status === "success") {
+    //     dispatch(getCategories());
+    //     closeCategoryModal();
+    //   }
+    // } catch (error) {
+    //   console.error("Failed to create category");
+    //   throw new Error("Failed to create category");
+    // } finally {
+    //   setIsSubmitting(false);
+    // }
   };
 
   return {

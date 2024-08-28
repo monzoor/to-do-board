@@ -7,8 +7,13 @@ import { ErrorResponse } from "../types/error";
 import { API_URLS } from "@todo/contants";
 
 export const categoryApi = {
-  createCategory: async (name: string, description: string) => {
-    // try {
+  createCategory: async ({
+    name,
+    description,
+  }: {
+    name: string;
+    description: string;
+  }) => {
     const response = await api.post<APIResponse<CategoryResponse>>(
       API_URLS.CATEGORY,
       {
@@ -16,11 +21,7 @@ export const categoryApi = {
         description,
       },
     );
-    return response.data;
-    // } catch (error) {
-    //   console.error("Create category error:", error);
-    //   return handleError(error);
-    // }
+    return response.data.data as CategoryResponse;
   },
   getCategories: async (config?: AxiosRequestConfig | null | {}) => {
     const response = await api.get<APIResponse<CategoryResponse[]>>(

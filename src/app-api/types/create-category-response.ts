@@ -5,5 +5,6 @@ export interface CategoryResponse {
   description: string;
   createdAt: string;
   _id: string;
+  userId: string;
   tickets: TicketResponse[];
 }
