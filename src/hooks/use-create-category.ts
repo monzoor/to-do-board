@@ -27,7 +27,7 @@ export const useCreateCategory = ({
   ) as string;
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // New loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -45,7 +45,7 @@ export const useCreateCategory = ({
     if (hasError) {
       toast.error(errorMessage);
       setIsSubmitting(false);
-      setIsLoading(false); // Stop loading on error
+      setIsLoading(false);
     }
   }, [hasError, errorMessage]);
 
@@ -53,7 +53,7 @@ export const useCreateCategory = ({
     if (isSubmitting || isLoading) return;
 
     setIsSubmitting(true);
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
 
     await dispatch(createCategory(data));
 
@@ -65,7 +65,7 @@ export const useCreateCategory = ({
     }
 
     setIsSubmitting(false);
-    setIsLoading(false); // Stop loading after submission
+    setIsLoading(false);
   };
 
   return {
@@ -74,6 +74,6 @@ export const useCreateCategory = ({
     errors,
     onSubmit,
     isSubmitting,
-    isLoading, // Include loading state in the return
+    isLoading,
   };
 };
