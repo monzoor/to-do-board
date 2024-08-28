@@ -19,18 +19,7 @@ import {
   selectCreateCategoryRequested,
 } from "@todo/libs/redux/slices/create-categories";
 import toast from "react-hot-toast";
-
-interface UseCreateCategoryProps {
-  closeCategoryModal: () => void;
-}
-
-interface UseCreateCategoryReturn {
-  register: UseFormRegister<ICreateCategoryFormInputs>;
-  handleSubmit: UseFormHandleSubmit<ICreateCategoryFormInputs>;
-  errors: FieldErrors<ICreateCategoryFormInputs>;
-  onSubmit: SubmitHandler<ICreateCategoryFormInputs>;
-  isSubmitting: boolean;
-}
+import { UseCreateCategoryProps, UseCreateCategoryReturn } from "./types";
 
 export const useCreateCategory = ({
   closeCategoryModal,

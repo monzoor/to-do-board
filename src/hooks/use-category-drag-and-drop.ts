@@ -6,25 +6,13 @@ import { ticketApi } from "@todo/app-api/ticket/ticket-api";
 import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
 import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
 import { moveTicketBetweenCategories } from "@todo/utils";
+import { UseCategoryDragAndDropReturn } from "./types";
 
 const findCategoryById = (categoryId: string, categories: Categories) => {
   return categories.find((cat) => cat._id === categoryId);
 };
 
-export const useDragAndDrop = (): {
-  categories: Categories;
-  draggingCategory: string | null;
-  onDragStart: (
-    e: React.DragEvent<HTMLDivElement>,
-    ticketIndex: number,
-    sourceCategoryId: string,
-  ) => void;
-  onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDrop: (
-    e: React.DragEvent<HTMLDivElement>,
-    targetCategoryId: string,
-  ) => Promise<void>;
-} => {
+export const useDragAndDrop = (): UseCategoryDragAndDropReturn => {
   const dispatch = useAppDispatch();
   const categoriesItems = useAppSelector(selectCategories) as Categories;
 

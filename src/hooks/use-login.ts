@@ -7,22 +7,10 @@ import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { authUser, resetUser } from "@todo/libs/redux/slices/user";
 import { useEffect, useState } from "react";
-import {
-  FieldErrors,
-  SubmitHandler,
-  useForm,
-  UseFormHandleSubmit,
-  UseFormRegister,
-} from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { UseLoginReturn } from "./types";
 
-export const useLogin = (): {
-  register: UseFormRegister<IFormInputs>;
-  handleSubmit: UseFormHandleSubmit<IFormInputs>;
-  errors: FieldErrors<IFormInputs>;
-  onSubmit: SubmitHandler<IFormInputs>;
-  hasError: boolean;
-  isLoading: boolean;
-} => {
+export const useLogin = (): UseLoginReturn => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);

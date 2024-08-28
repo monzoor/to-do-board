@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { UseLogoutReturn } from "./types";
 
-export const useLogout = () => {
+export const useLogout = (): UseLogoutReturn => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {

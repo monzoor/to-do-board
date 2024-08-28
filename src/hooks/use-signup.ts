@@ -8,22 +8,10 @@ import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
 import { resetUser } from "@todo/libs/redux/slices/user";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-  FieldErrors,
-  SubmitHandler,
-  useForm,
-  UseFormRegister,
-} from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { UseSignupReturn } from "./types";
 
-export const useSignup = (): {
-  register: UseFormRegister<IFormSignupInputs>;
-  handleSubmit: (
-    callback: SubmitHandler<IFormSignupInputs>,
-  ) => (e?: React.FormEvent<HTMLFormElement>) => Promise<void>;
-  errors: FieldErrors<IFormSignupInputs>;
-  onSubmit: SubmitHandler<IFormSignupInputs>;
-  isLoading: boolean;
-} => {
+export const useSignup = (): UseSignupReturn => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();

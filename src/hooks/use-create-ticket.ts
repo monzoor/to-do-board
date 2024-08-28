@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  FieldErrors,
-  SubmitHandler,
-  useForm,
-  UseFormHandleSubmit,
-  UseFormRegister,
-} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { selectCategories } from "@todo/libs/redux/slices/categories/selectors/get-categories";
@@ -14,19 +8,13 @@ import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
 import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
 import { ICreateTicketFormInputs } from "@todo/app/components/create-ticket/types/create-ticket";
 import { createTicketSchema } from "@todo/app/components/create-ticket/validation/create-ticket-schema";
+import { UseCreateTicketReturn } from "./types";
 
 export const useCreateTicket = ({
   closeTicketModal,
 }: {
   closeTicketModal: () => void;
-}): {
-  register: UseFormRegister<ICreateTicketFormInputs>;
-  handleSubmit: UseFormHandleSubmit<ICreateTicketFormInputs>;
-  errors: FieldErrors<ICreateTicketFormInputs>;
-  onSubmit: SubmitHandler<ICreateTicketFormInputs>;
-  loading: boolean;
-  getCategoriesList: { label: string; value: string }[];
-} => {
+}): UseCreateTicketReturn => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
 

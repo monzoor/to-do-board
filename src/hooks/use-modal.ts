@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { UseModalReturn } from "./types";
 
-export const useModal = () => {
+export const useModal = (): UseModalReturn => {
   const [isVisible, setIsVisible] = useState(false);
 
   const openModal = () => setIsVisible(true);

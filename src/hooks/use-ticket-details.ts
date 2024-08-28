@@ -9,11 +9,13 @@ import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-cat
 import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
 import { ticketApi } from "@todo/app-api/ticket/ticket-api";
 import { TicketType } from "@todo/app/components/ticket/type";
+import { ICreateTicketFormInputs } from "@todo/app/components/create-ticket/types/create-ticket";
+import { UseTicketDetailsReturn } from "./types";
 
 export const useTicketDetails = (
   ticket: TicketType,
   closeTicketModal: () => void,
-) => {
+): UseTicketDetailsReturn => {
   const dispatch = useAppDispatch();
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -31,7 +33,7 @@ export const useTicketDetails = (
     setValue,
     getValues,
     formState: { isDirty },
-  } = useForm({
+  } = useForm<ICreateTicketFormInputs>({
     defaultValues: useMemo(
       () => ({
         title: currentDraft?.title || ticket.title,
@@ -55,11 +57,7 @@ export const useTicketDetails = (
     }
   }, [currentDraft, setValue]);
 
-  const onSubmit = async (data: {
-    title: string;
-    description: string;
-    dueDate: string;
-  }) => {
+  const onSubmit = async (data: ICreateTicketFormInputs) => {
     if (!ticket._id || !ticket.category) {
       console.error("Ticket ID or category is missing");
       return;
