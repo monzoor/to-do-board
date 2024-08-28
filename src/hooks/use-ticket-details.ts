@@ -5,12 +5,12 @@ import { setDrafts } from "@todo/libs/redux/slices/draft/slice";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { Draft } from "@todo/libs/redux/slices/draft/type";
 import { selectDraft } from "@todo/libs/redux/slices/draft/selector/select-draft";
-import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
 import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
 import { ticketApi } from "@todo/app-api/ticket/ticket-api";
 import { TicketType } from "@todo/app/components/ticket/type";
 import { ICreateTicketFormInputs } from "@todo/app/components/create-ticket/types/create-ticket";
 import { UseTicketDetailsReturn } from "./types";
+import { getCategories } from "@todo/libs/redux/slices/categories";
 
 export const useTicketDetails = (
   ticket: TicketType,
@@ -39,10 +39,10 @@ export const useTicketDetails = (
         title: currentDraft?.title || ticket.title,
         description: currentDraft?.description || ticket.description,
         dueDate: currentDraft?.dueDate
-          ? formatDate(new Date(currentDraft.dueDate))
+          ? new Date(formatDate(new Date(currentDraft.dueDate)))
           : ticket.dueDate
-            ? formatDate(ticket.dueDate)
-            : "",
+            ? new Date(formatDate(ticket.dueDate))
+            : new Date(),
       }),
       [ticket, currentDraft],
     ),
@@ -53,7 +53,7 @@ export const useTicketDetails = (
     if (currentDraft) {
       setValue("title", currentDraft.title);
       setValue("description", currentDraft.description);
-      setValue("dueDate", currentDraft.dueDate);
+      setValue("dueDate", new Date(currentDraft.dueDate));
     }
   }, [currentDraft, setValue]);
 
@@ -103,7 +103,7 @@ export const useTicketDetails = (
         id: ticket._id,
         title: currentValues.title,
         description: currentValues.description,
-        dueDate: currentValues.dueDate,
+        dueDate: currentValues.dueDate.toISOString(),
       });
 
       dispatch(setDrafts(updatedDrafts));

@@ -1,6 +1,6 @@
 "use client";
 
-import { setCategories } from "@todo/libs/redux/slices/categories/slice";
+import { setCategories } from "@todo/libs/redux/slices/categories";
 import { receiveUser } from "@todo/libs/redux/slices/user";
 import store from "@todo/libs/redux/store";
 import { AppStore } from "@todo/libs/redux/types/app-store";

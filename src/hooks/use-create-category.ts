@@ -4,7 +4,6 @@ import { ICreateCategoryFormInputs } from "@todo/app/components/create-category/
 import { createCategorySchema } from "@todo/app/components/create-category/validation/create-category-validation";
 import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
-import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   createCategory,
@@ -15,6 +14,7 @@ import {
 import toast from "react-hot-toast";
 import { UseCreateCategoryProps, UseCreateCategoryReturn } from "./types";
 import { selectCreateCategoryErrorMessage } from "@todo/libs/redux/slices/create-categories/selectors";
+import { getCategories } from "@todo/libs/redux/slices/categories";
 
 export const useCreateCategory = ({
   closeCategoryModal,

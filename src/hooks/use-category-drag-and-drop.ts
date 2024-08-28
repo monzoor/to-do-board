@@ -1,12 +1,15 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
-import { selectCategories } from "@todo/libs/redux/slices/categories/selectors/get-categories";
 import { Categories } from "@todo/types";
 import { ticketApi } from "@todo/app-api/ticket/ticket-api";
-import { getCategories } from "@todo/libs/redux/slices/categories/thunks/get-categories";
+
 import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
 import { moveTicketBetweenCategories } from "@todo/utils";
 import { UseCategoryDragAndDropReturn } from "./types";
+import {
+  getCategories,
+  selectCategories,
+} from "@todo/libs/redux/slices/categories";
 
 const findCategoryById = (categoryId: string, categories: Categories) => {
   return categories.find((cat) => cat._id === categoryId);
