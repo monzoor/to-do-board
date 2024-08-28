@@ -1,3 +1,4 @@
+import { Loader } from "@todo/components";
 import { useCreateCategory } from "@todo/hooks/use-create-category";
 
 export const CreateCategory = ({
@@ -5,7 +6,7 @@ export const CreateCategory = ({
 }: {
   closeCategoryModal: () => void;
 }) => {
-  const { register, handleSubmit, errors, onSubmit, isSubmitting } =
+  const { register, handleSubmit, errors, onSubmit, isLoading } =
     useCreateCategory({
       closeCategoryModal,
     });
@@ -62,11 +63,11 @@ export const CreateCategory = ({
             Close
           </button>
           <button
-            disabled={isSubmitting}
+            disabled={isLoading}
             className="mb-1 mr-1 rounded bg-emerald-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-emerald-600"
             type="submit"
           >
-            Save category
+            {isLoading ? <Loader /> : "Save category"}
           </button>
         </div>
       </form>

@@ -16,4 +16,5 @@ export interface UseCreateCategoryReturn {
   errors: FieldErrors<ICreateCategoryFormInputs>;
   onSubmit: SubmitHandler<ICreateCategoryFormInputs>;
   isSubmitting: boolean;
+  isLoading: boolean;
 }
