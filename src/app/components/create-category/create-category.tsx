@@ -1,5 +1,5 @@
 import { Loader } from "@todo/components";
-import { useCreateCategory } from "@todo/hooks/use-create-category";
+import { useCreateCategory } from "@todo/hooks";
 
 export const CreateCategory = ({
   closeCategoryModal,

@@ -1,7 +1,7 @@
 "use client";
 
 import { Modal } from "@todo/components";
-import { useModal } from "@todo/hooks/use-modal";
+import { useModal } from "@todo/hooks";
 import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { selectUser } from "@todo/libs/redux/slices/user/selector/get-user";
 import { CreateCategory } from "../create-category/create-category";

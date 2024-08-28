@@ -1,6 +1,6 @@
 "use client";
 
-import { useDragAndDrop } from "@todo/hooks/use-category-drag-and-drop";
+import { useDragAndDrop } from "@todo/hooks";
 import { CategoryCard } from "../category";
 import { Ticket } from "../ticket";
 import { CreateActions } from "../control-header/control-header";

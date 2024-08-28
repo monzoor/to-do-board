@@ -2,7 +2,7 @@
 
 import { Loader } from "@todo/components";
 import { URLS } from "@todo/contants";
-import { useSignup } from "@todo/hooks/use-signup";
+import { useSignup } from "@todo/hooks";
 import { useRouter } from "next/navigation";
 
 export const SignUpContainer = () => {

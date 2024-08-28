@@ -1,4 +1,4 @@
-import { useCreateTicket } from "@todo/hooks/use-create-ticket";
+import { useCreateTicket } from "@todo/hooks";
 
 export const CreateTicket = ({
   closeTicketModal,

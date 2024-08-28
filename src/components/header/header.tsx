@@ -1,6 +1,6 @@
 "use client";
 
-import { useLogout } from "@todo/hooks/use-logout";
+import { useLogout } from "@todo/hooks";
 
 export const Header = () => {
   const { isAuthenticated, logout } = useLogout();

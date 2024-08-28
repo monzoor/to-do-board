@@ -1,7 +1,7 @@
 import { Controller } from "react-hook-form";
 import { formatDate } from "@todo/utils";
 import { TicketType } from "../ticket/type";
-import { useTicketDetails } from "@todo/hooks/use-ticket-details";
+import { useTicketDetails } from "@todo/hooks";
 
 export const TicketDetails = ({
   ticket,
@@ -101,6 +101,11 @@ export const TicketDetails = ({
                 {...field}
                 className="w-full rounded border px-2 py-1"
                 type="date"
+                value={
+                  field.value instanceof Date
+                    ? field.value.toISOString().split("T")[0]
+                    : field.value
+                }
                 onBlur={() => setIsEditingDueDate(false)}
               />
             ) : (
