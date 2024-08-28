@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { authApi } from "@todo/app-api/auth/auth-api";
 import { IFormSignupInputs } from "@todo/app/signup/types/signup";
 import { signupSchema } from "@todo/app/signup/validation/signup-validation";
-import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
+import { useAppDispatch } from "@todo/libs";
 import { resetUser } from "@todo/libs/redux/slices/user";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

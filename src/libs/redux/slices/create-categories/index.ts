@@ -4,4 +4,5 @@ export { createCategory } from "./thunks";
 export {
   selectCreateCategoryRequested,
   selectCreateCategoryErrorOccurred,
+  selectCreateCategoryErrorMessage,
 } from "./selectors";

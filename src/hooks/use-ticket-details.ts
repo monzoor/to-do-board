@@ -2,15 +2,13 @@ import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { formatDate } from "@todo/utils";
 import { setDrafts } from "@todo/libs/redux/slices/draft/slice";
-import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { Draft } from "@todo/libs/redux/slices/draft/type";
 import { selectDraft } from "@todo/libs/redux/slices/draft/selector/select-draft";
-import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
+import { getCategories, useAppDispatch, useAppSelector } from "@todo/libs";
 import { ticketApi } from "@todo/app-api/ticket/ticket-api";
 import { TicketType } from "@todo/app/components/ticket/type";
 import { ICreateTicketFormInputs } from "@todo/app/components/create-ticket/types/create-ticket";
 import { UseTicketDetailsReturn } from "./types";
-import { getCategories } from "@todo/libs/redux/slices/categories";
 
 export const useTicketDetails = (
   ticket: TicketType,

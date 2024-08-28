@@ -1,5 +1,4 @@
-export { api } from "./axios";
-export { useAppDispatch, useAppSelector } from "./redux";
+export { useAppDispatch, useAppSelector } from "./hooks";
 
 export {
   resetCreateCategories,
@@ -15,6 +14,6 @@ export {
   setCategories,
   resetCategories,
   categories,
-} from "./redux";
+} from "./slices";
 
-export type { CreateCategoriesState } from "./redux";
+export type { CreateCategoriesState } from "./slices";

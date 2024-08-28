@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
 import { ticketApi } from "@todo/app-api/ticket/ticket-api";
-import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
-import { ICreateTicketFormInputs } from "@todo/app/components/create-ticket/types/create-ticket";
-import { createTicketSchema } from "@todo/app/components/create-ticket/validation/create-ticket-schema";
-import { UseCreateTicketReturn } from "./types";
 import {
   getCategories,
   selectCategories,
-} from "@todo/libs/redux/slices/categories";
+  useAppDispatch,
+  useAppSelector,
+} from "@todo/libs";
+import { ICreateTicketFormInputs } from "@todo/app/components/create-ticket/types/create-ticket";
+import { createTicketSchema } from "@todo/app/components/create-ticket/validation/create-ticket-schema";
+import { UseCreateTicketReturn } from "./types";
 
 export const useCreateTicket = ({
   closeTicketModal,

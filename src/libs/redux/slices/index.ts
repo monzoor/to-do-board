@@ -1,6 +1,3 @@
-export { api } from "./axios";
-export { useAppDispatch, useAppSelector } from "./redux";
-
 export {
   resetCreateCategories,
   createCategorySlice,
@@ -8,6 +5,11 @@ export {
   selectCreateCategoryRequested,
   selectCreateCategoryErrorOccurred,
   selectCreateCategoryErrorMessage,
+} from "./create-categories";
+
+export type { CreateCategoriesState } from "./create-categories";
+
+export {
   selectCategories,
   selectCategoryRequested,
   getCategories,
@@ -15,6 +17,4 @@ export {
   setCategories,
   resetCategories,
   categories,
-} from "./redux";
-
-export type { CreateCategoriesState } from "./redux";
+} from "./categories";

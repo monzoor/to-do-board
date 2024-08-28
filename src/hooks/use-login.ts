@@ -3,8 +3,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IFormInputs } from "@todo/app/login/types/login";
 import { loginSchema } from "@todo/app/login/validation/login-validation";
-import { useAppDispatch } from "@todo/libs/redux/hooks/use-app-dispatch";
-import { useAppSelector } from "@todo/libs/redux/hooks/use-app-selector";
+import { useAppDispatch, useAppSelector } from "@todo/libs";
 import { authUser, resetUser } from "@todo/libs/redux/slices/user";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
