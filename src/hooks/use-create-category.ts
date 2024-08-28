@@ -54,21 +54,6 @@ export const useCreateCategory = ({
     dispatch(resetCreateCategories());
     closeCategoryModal();
     setIsSubmitting(false);
-
-    // setIsSubmitting(true);
-
-    // try {
-    //   const response = await categoryApi.createCategory(data);
-    //   if (response.status === "success") {
-    //     dispatch(getCategories());
-    //     closeCategoryModal();
-    //   }
-    // } catch (error) {
-    //   console.error("Failed to create category");
-    //   throw new Error("Failed to create category");
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
   };
 
   return {

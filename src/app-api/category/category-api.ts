@@ -15,7 +15,8 @@ export const categoryApi = {
     description: string;
   }) => {
     const response = await api.post<APIResponse<CategoryResponse>>(
-      API_URLS.CATEGORY,
+      // API_URLS.CATEGORY,
+      "/asdas",
       {
         name,
         description,
