@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Loader } from "@todo/components";
+import { Button, Input, Loader } from "@todo/components";
 import { URLS } from "@todo/contants";
 import { useLogin } from "@todo/hooks";
 import { useRouter } from "next/navigation";
@@ -19,15 +19,14 @@ export const LoginContainer = () => {
         >
           Your email
         </label>
-        <input
-          autoComplete="new-email"
-          type="email"
+        <Input
           id="email"
-          className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          type="email"
           placeholder="name@company.com"
-          {...register("email")}
+          register={register}
+          error={errors.email?.message}
+          theme="dark"
         />
-        <p className="mt-3 text-xs text-rose-400">{errors.email?.message}</p>
       </div>
       <div>
         <label
@@ -36,15 +35,14 @@ export const LoginContainer = () => {
         >
           Password
         </label>
-        <input
-          autoComplete="new-password"
-          type="password"
+        <Input
           id="password"
+          type="password"
           placeholder="••••••••"
-          className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-          {...register("password")}
+          register={register}
+          error={errors.password?.message}
+          theme="dark"
         />
-        <p className="mt-3 text-xs text-red-400">{errors.password?.message}</p>
         {hasError && (
           <p className="mt-3 text-xs text-red-400">
             Invalid credentials. Please try again.

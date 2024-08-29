@@ -5,4 +5,4 @@ export { ErrorBoundary } from "./error-boundary";
 
 export type { ModalProps } from "./modal";
 
-export { Button } from "./atoms";
+export { Button, Input } from "./atoms";

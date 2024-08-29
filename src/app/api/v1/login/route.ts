@@ -14,12 +14,12 @@ export async function POST(request: NextRequest) {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return errorResponse("Invalid credentials", 401);
+      throw new ErrorHandler("Invalid token", 401);
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return errorResponse("Invalid credentials", 401);
+      throw new ErrorHandler("Invalid credentials", 401);
     }
 
     // Create JWT and send response
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       { userId: user._id },
       process.env.JWT_SECRET as string,
       {
-        expiresIn: "365d",
+        expiresIn: "7d",
       },
     );
 
