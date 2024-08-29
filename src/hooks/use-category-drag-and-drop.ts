@@ -11,6 +11,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "@todo/libs";
+import toast from "react-hot-toast";
 
 const findCategoryById = (categoryId: string, categories: Categories) => {
   return categories.find((cat) => cat._id === categoryId);
@@ -82,10 +83,9 @@ export const useDragAndDrop = (): UseCategoryDragAndDropReturn => {
           newCategoryId: targetCategoryId,
         });
 
-        // Dispatch getCategories to update categories in the state
         dispatch(getCategories());
       } catch (error) {
-        console.error("Error moving ticket or fetching categories:");
+        toast.error("Error moving ticket or fetching categories:");
       }
     },
     [memoizedCategories, dispatch],

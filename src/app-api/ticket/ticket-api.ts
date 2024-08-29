@@ -12,20 +12,16 @@ export const ticketApi = {
     ticketId: string;
     newCategoryId: string;
   }) => {
-    try {
-      const response = await api.post<APIResponse<TicketResponse>>(
-        API_URLS.MOVE,
-        {
-          ticketId,
-          newCategoryId,
-        },
-      );
-      return response.data.data;
-    } catch (error) {
-      console.error("Move ticket error:");
-      throw error;
-    }
+    const response = await api.post<APIResponse<TicketResponse>>(
+      API_URLS.MOVE,
+      {
+        ticketId,
+        newCategoryId,
+      },
+    );
+    return response.data.data;
   },
+
   createTicket: async ({
     title,
     description,
@@ -43,6 +39,7 @@ export const ticketApi = {
     );
     return response.data.data;
   },
+
   updateTicket: async ({
     ticketId,
     title,
