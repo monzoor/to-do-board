@@ -1,4 +1,4 @@
-import { Button, Loader } from "@todo/components";
+import { Button, Input, Loader, TextArea } from "@todo/components";
 import { useCreateTicket } from "@todo/hooks";
 
 export const CreateTicket = ({
@@ -24,40 +24,24 @@ export const CreateTicket = ({
         onSubmit={handleSubmit(onSubmit)}
       >
         <div>
-          <label
-            htmlFor="name"
-            className="mb-2 block text-sm font-medium text-gray-900"
-          >
-            Ticket Title
-          </label>
-          <input
-            autoComplete="new-name"
+          <Input
             type="text"
             id="ticket"
-            className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-gray-900"
             placeholder="Ticket title"
-            {...register("title")}
+            register={register}
+            error={errors.title?.message}
+            label="Ticket Title"
           />
-          <p className="mt-3 text-xs text-rose-400">{errors.title?.message}</p>
         </div>
 
         <div>
-          <label
-            htmlFor="category"
-            className="mb-2 block text-sm font-medium text-gray-900"
-          >
-            Ticket Description
-          </label>
-          <textarea
-            autoComplete="new-description"
+          <TextArea
             id="description"
-            className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-gray-900"
             placeholder="Category description"
-            {...register("description")}
+            register={register}
+            error={errors.description?.message}
+            label="Ticket Description"
           />
-          <p className="mt-3 text-xs text-rose-400">
-            {errors.description?.message}
-          </p>
         </div>
         <div className="mt-4">
           <label
@@ -86,21 +70,14 @@ export const CreateTicket = ({
         </div>
 
         <div className="mb-4">
-          <label
-            htmlFor="dueDate"
-            className="mb-2 block text-sm font-medium text-gray-900"
-          >
-            Due Date
-          </label>
-          <input
+          <Input
             type="date"
             id="dueDate"
-            className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-gray-900"
-            {...register("dueDate")}
+            placeholder="Due Date"
+            register={register}
+            error={errors.dueDate?.message}
+            label="Due Date"
           />
-          <p className="mt-3 text-xs text-rose-400">
-            {errors.dueDate?.message}
-          </p>
         </div>
         <div className="border-blueGray-200 flex items-center justify-end rounded-b border-t border-solid pb-0 pt-6">
           <Button color="gray" width="w-auto" onClick={closeTicketModal}>

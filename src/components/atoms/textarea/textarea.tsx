@@ -1,13 +1,12 @@
-import { InputProps } from "./types";
+import { TextAreaProps } from "./types";
 
-export const Input: React.FC<InputProps> = ({
+export const TextArea: React.FC<TextAreaProps> = ({
   id,
-  type,
   placeholder,
   register,
   error,
-  theme = "light",
   label,
+  theme = "light",
 }) => {
   const isDarkMode = theme === "dark";
 
@@ -23,9 +22,8 @@ export const Input: React.FC<InputProps> = ({
           {label}
         </label>
       )}
-      <input
+      <textarea
         autoComplete={`new-${id}`}
-        type={type}
         id={id}
         className={`focus:ring-primary-600 focus:border-primary-600 block w-full rounded-md border p-2.5 ${
           isDarkMode

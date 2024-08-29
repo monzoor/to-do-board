@@ -1,12 +1,10 @@
 import { UseFormRegister } from "react-hook-form";
-type Theme = "light" | "dark";
 
-export interface InputProps {
+export interface TextAreaProps {
   id: string;
-  type: string;
   placeholder: string;
   register: UseFormRegister<any>;
   error?: string;
-  theme?: Theme;
   label?: string;
+  theme?: "light" | "dark";
 }
