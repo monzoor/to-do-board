@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DraftState, Draft } from "./type";
+import { DraftState, Draft } from "./types";
 
 const initialState: DraftState = {
   drafts: [],

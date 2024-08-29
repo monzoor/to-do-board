@@ -1,6 +1,6 @@
 import { Control, SubmitHandler, UseFormHandleSubmit } from "react-hook-form";
-import { Draft } from "@todo/libs/redux/slices/draft/type";
 import { ICreateTicketFormInputs } from "@todo/app/components/create-ticket/types/create-ticket";
+import { Draft } from "@todo/libs";
 
 export interface UseTicketDetailsReturn {
   isEditingTitle: boolean;

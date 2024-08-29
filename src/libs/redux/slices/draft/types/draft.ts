@@ -1,4 +1,3 @@
-// Define the shape of the draft data
 export interface Draft {
   id: string;
   title: string;
@@ -6,7 +5,6 @@ export interface Draft {
   dueDate: string;
 }
 
-// Define the initial state
 export interface DraftState {
   drafts: Draft[];
 }
