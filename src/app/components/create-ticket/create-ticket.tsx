@@ -1,3 +1,4 @@
+import { Loader } from "@todo/components";
 import { useCreateTicket } from "@todo/hooks";
 
 export const CreateTicket = ({
@@ -114,7 +115,7 @@ export const CreateTicket = ({
             className="mb-1 mr-1 rounded bg-emerald-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-emerald-600"
             type="submit"
           >
-            Save category
+            {loading ? <Loader /> : <span>Save ticket</span>}
           </button>
         </div>
       </form>

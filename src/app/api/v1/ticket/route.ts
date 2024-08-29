@@ -5,6 +5,8 @@ import { authenticateUser, withAuth } from "../../helper";
 import Category from "@todo/app/api/model/category/category.modal";
 import History from "@todo/app/api/model/history/history.modal";
 import { ErrorHandler, errorResponse } from "../../utils";
+import { validateSchema } from "../../utils/validation/schema-validation";
+import { createTicketValidationSchema } from "../../validation-schema/create-ticket-validation-schema";
 
 const createTicket = async (request: NextRequest) => {
   try {
@@ -13,21 +15,24 @@ const createTicket = async (request: NextRequest) => {
     const userId = authenticateUser(request)?.userId;
 
     if (!userId) {
-      return errorResponse("Invalid token", 401);
+      throw new ErrorHandler("Invalid token", 401);
     }
 
-    const {
-      title,
-      description,
-      category,
-      dueDate,
-      history = [],
-    } = await request.json();
+    const requestBody = await request.json();
+    const validationResponse = await validateSchema(
+      createTicketValidationSchema,
+      requestBody,
+    );
+    if (!validationResponse.isValid) {
+      return validationResponse.response;
+    }
+
+    const { title, description, category, dueDate, history = [] } = requestBody;
 
     // Fetch the category details
     const categoryDoc = await Category.findById(category).exec();
     if (!categoryDoc) {
-      return errorResponse("Category not found", 404);
+      throw new ErrorHandler("Category not found", 404);
     }
 
     // Create the new history entry

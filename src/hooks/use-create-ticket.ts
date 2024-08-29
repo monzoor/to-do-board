@@ -11,6 +11,8 @@ import {
 import { ICreateTicketFormInputs } from "@todo/app/components/create-ticket/types/create-ticket";
 import { createTicketSchema } from "@todo/app/components/create-ticket/validation/create-ticket-schema";
 import { UseCreateTicketReturn } from "./types";
+import toast from "react-hot-toast";
+import { AxiosError } from "axios";
 
 export const useCreateTicket = ({
   closeTicketModal,
@@ -39,21 +41,25 @@ export const useCreateTicket = ({
     if (loading) return;
     setLoading(true);
 
-    try {
-      const newData = {
-        ...data,
-        dueDate: new Date(data.dueDate).toISOString(),
-      };
-      const response = await ticketApi.createTicket(newData);
-      if (response) {
+    const newData = {
+      ...data,
+      dueDate: new Date(data.dueDate).toISOString(),
+    };
+    const response = ticketApi.createTicket(newData);
+
+    toast.promise(response, {
+      loading: "Loading",
+      success: () => {
         dispatch(getCategories());
         closeTicketModal();
-      }
-    } catch (error) {
-      console.error("Failed to create ticket");
-    } finally {
-      setLoading(false);
-    }
+        setLoading(false);
+        return "Ticket created successfully";
+      },
+      error: (error: AxiosError | any) => {
+        setLoading(false);
+        return error?.response?.data?.message || "Something went wrong";
+      },
+    });
   };
 
   return {

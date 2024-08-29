@@ -36,21 +36,16 @@ export const ticketApi = {
     category: string;
     dueDate: string;
   }) => {
-    try {
-      const response = await api.post<APIResponse<TicketResponse>>(
-        API_URLS.TICKET,
-        {
-          title,
-          description,
-          category,
-          dueDate,
-        },
-      );
-      return response.data.data;
-    } catch (error) {
-      console.error("Create ticket error:");
-      return handleError(error);
-    }
+    const response = await api.post<APIResponse<TicketResponse>>(
+      API_URLS.TICKET,
+      {
+        title,
+        description,
+        category,
+        dueDate,
+      },
+    );
+    return response.data.data;
   },
   updateTicket: async ({
     ticketId,
