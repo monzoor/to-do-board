@@ -1,4 +1,4 @@
-import { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 import { IHistory } from "./history";
 
 export interface ITicket extends Document {
@@ -6,7 +6,7 @@ export interface ITicket extends Document {
   description: string;
   assignTo?: Schema.Types.ObjectId;
   history: IHistory[];
-  category: Schema.Types.ObjectId;
+  category: mongoose.Types.ObjectId;
   createdAt: Date;
   dueDate: Date;
   updatedAt: Date;

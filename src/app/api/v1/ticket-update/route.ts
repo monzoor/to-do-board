@@ -32,9 +32,9 @@ const updateTicket = async (request: NextRequest) => {
     const ticketObjectId = new Types.ObjectId(ticketId);
     const categoryObjectId = new Types.ObjectId(category);
 
-    const categoryByTicketID = (await Category.findOne({
+    const categoryByTicketID = await Category.findOne({
       _id: categoryObjectId,
-    }).exec()) as ICategory;
+    }).exec();
 
     if (!categoryByTicketID) {
       throw new ErrorHandler("category not found", 404);
@@ -64,25 +64,16 @@ const updateTicket = async (request: NextRequest) => {
     // Update the ticket
     ticket.title = title;
     ticket.description = description;
-    ticket.category = category;
+    ticket.category = categoryObjectId;
     ticket.dueDate = new Date(dueDate);
     ticket.updatedAt = new Date();
     ticket.history.push(newHistory);
 
-    const updatedTicket = await ticket.save();
-
-    await Category.findByIdAndUpdate(
-      { _id: categoryObjectId, "tickets._id": ticketObjectId },
-      {
-        $set: {
-          tickets: updatedTicket,
-        },
-      },
-    );
+    await categoryByTicketID.save();
 
     return NextResponse.json({
       status: "success",
-      data: updatedTicket,
+      data: ticket,
     });
   } catch (error) {
     if (error instanceof ErrorHandler) {
