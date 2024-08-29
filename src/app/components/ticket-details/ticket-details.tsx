@@ -2,6 +2,7 @@ import { Controller } from "react-hook-form";
 import { formatDate } from "@todo/utils";
 import { TicketType } from "../ticket/type";
 import { useTicketDetails } from "@todo/hooks";
+import { Loader } from "@todo/components";
 
 export const TicketDetails = ({
   ticket,
@@ -22,6 +23,8 @@ export const TicketDetails = ({
     onSubmit,
     handleDraftSave,
     currentDraft,
+    loading,
+    isDirty,
   } = useTicketDetails(ticket, closeTicketModal);
 
   return (
@@ -149,10 +152,11 @@ export const TicketDetails = ({
           Close
         </button>
         <button
-          className="mb-1 mr-1 rounded bg-emerald-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-emerald-600"
+          className="mb-1 mr-1 rounded bg-emerald-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-emerald-600 disabled:cursor-not-allowed disabled:bg-gray-400"
           type="submit"
+          disabled={!isDirty || loading}
         >
-          Save
+          {loading ? <Loader /> : "Save"}
         </button>
       </div>
     </form>

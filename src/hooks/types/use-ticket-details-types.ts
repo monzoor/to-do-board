@@ -14,4 +14,6 @@ export interface UseTicketDetailsReturn {
   currentDraft: Draft | undefined;
   onSubmit: SubmitHandler<ICreateTicketFormInputs>;
   handleDraftSave: () => void;
+  isDirty: boolean;
+  loading: boolean;
 }

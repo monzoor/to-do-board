@@ -21,6 +21,7 @@ export const useTicketDetails = (
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingDueDate, setIsEditingDueDate] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const allDrafts = useAppSelector(selectDraft);
   const currentDraft = allDrafts.find(
@@ -59,9 +60,11 @@ export const useTicketDetails = (
 
   const onSubmit = async (data: ICreateTicketFormInputs) => {
     if (!ticket._id || !ticket.category) {
-      console.error("Ticket ID or category is missing");
+      toast.error("Ticket ID or category is missing");
       return;
     }
+
+    setLoading(true);
 
     const updatedDrafts = allDrafts.filter((draft) => draft.id !== ticket._id);
 
@@ -81,9 +84,11 @@ export const useTicketDetails = (
         dispatch(setDrafts(updatedDrafts));
         dispatch(getCategories());
         closeTicketModal();
-        return "Ticket created successfully";
+        setLoading(false);
+        return "Ticket updated successfully";
       },
       error: (error: AxiosError | any) => {
+        setLoading(false);
         return error?.response?.data?.message || "Something went wrong";
       },
     });
@@ -123,5 +128,7 @@ export const useTicketDetails = (
     onSubmit,
     handleDraftSave,
     currentDraft,
+    loading,
+    isDirty,
   };
 };
