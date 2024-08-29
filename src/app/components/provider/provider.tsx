@@ -1,12 +1,11 @@
 "use client";
 
-import { setCategories } from "@todo/libs";
-import { receiveUser } from "@todo/libs/redux/slices/user";
+import React, { useRef } from "react";
+import { Provider } from "react-redux";
+import { setCategories, receiveUser } from "@todo/libs";
 import store from "@todo/libs/redux/store";
 import { AppStore } from "@todo/libs/redux/types/app-store";
 import { Nullable, Categories, User } from "@todo/types";
-import React, { useRef } from "react";
-import { Provider } from "react-redux";
 
 interface StoreProviderProps {
   children: React.ReactNode;

@@ -18,6 +18,17 @@ export {
   setDrafts,
   resetDrafts,
   drafts,
+  requestUser,
+  receiveUser,
+  userError,
+  resetUser,
+  authUser,
+  selectUser,
 } from "./slices";
 
-export type { CreateCategoriesState, Draft, DraftState } from "./slices";
+export type {
+  CreateCategoriesState,
+  Draft,
+  DraftState,
+  UserState,
+} from "./slices";

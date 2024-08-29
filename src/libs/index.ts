@@ -19,6 +19,17 @@ export {
   setDrafts,
   resetDrafts,
   drafts,
+  requestUser,
+  receiveUser,
+  userError,
+  resetUser,
+  authUser,
+  selectUser,
 } from "./redux";
 
-export type { CreateCategoriesState, Draft, DraftState } from "./redux";
+export type {
+  CreateCategoriesState,
+  Draft,
+  DraftState,
+  UserState,
+} from "./redux";
