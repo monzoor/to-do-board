@@ -26,7 +26,7 @@ export const CreateTicket = ({
         <div>
           <Input
             type="text"
-            id="ticket"
+            id="title"
             placeholder="Ticket title"
             register={register}
             error={errors.title?.message}
@@ -45,7 +45,7 @@ export const CreateTicket = ({
         </div>
         <div className="mt-4">
           <Select
-            id="ticketCategory"
+            id="category"
             label="Ticket Category"
             options={getCategoriesList}
             register={register}
