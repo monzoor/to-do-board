@@ -5,7 +5,7 @@ import { Header } from "@todo/components";
 import { getInitialStoreData } from "@todo/helper";
 import { Toaster } from "react-hot-toast";
 
-import StoreProvider from "./components/provider/provider";
+import StoreProvider from "../libs/redux/provider/provider";
 import ErrorBoundary from "@todo/components/error-boundary/error-boundary";
 
 const inter = Inter({ subsets: ["latin"] });
