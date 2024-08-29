@@ -1,4 +1,4 @@
-import { Button, Input, Loader, TextArea } from "@todo/components";
+import { Button, Input, Loader, Select, TextArea } from "@todo/components";
 import { useCreateTicket } from "@todo/hooks";
 
 export const CreateTicket = ({
@@ -44,29 +44,13 @@ export const CreateTicket = ({
           />
         </div>
         <div className="mt-4">
-          <label
-            htmlFor="ticketCategory"
-            className="mb-2 block text-sm font-medium text-gray-900"
-          >
-            Ticket Category
-          </label>
-          <select
+          <Select
             id="ticketCategory"
-            className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-gray-900"
-            {...register("category")}
-          >
-            <option value="">Select Category</option>
-            {getCategoriesList.map((category) => {
-              return (
-                <option key={category.value} value={category.value}>
-                  {category.label}
-                </option>
-              );
-            })}
-          </select>
-          <p className="mt-3 text-xs text-rose-400">
-            {errors.category?.message}
-          </p>
+            label="Ticket Category"
+            options={getCategoriesList}
+            register={register}
+            error={errors.category?.message}
+          />
         </div>
 
         <div className="mb-4">
