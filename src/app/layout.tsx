@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Header } from "@todo/components";
+import { ErrorBoundary, Header } from "@todo/components";
 import { getInitialStoreData } from "@todo/helper";
 import { Toaster } from "react-hot-toast";
 
 import StoreProvider from "../libs/redux/provider/provider";
-import ErrorBoundary from "@todo/components/error-boundary/error-boundary";
 
 const inter = Inter({ subsets: ["latin"] });
 
