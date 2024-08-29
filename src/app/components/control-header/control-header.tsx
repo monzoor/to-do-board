@@ -25,7 +25,7 @@ export const CreateActions = () => {
   }
 
   return (
-    <div className="container mx-auto pl-5 pt-6">
+    <div className="pl-5 pt-6 lg:container md:mx-auto">
       <div className="mb-2 flex">
         <Button width="w-auto" color="blue" onClick={openCategoryModal}>
           Create Category

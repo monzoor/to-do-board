@@ -2,7 +2,7 @@ import { Controller } from "react-hook-form";
 import { formatDate } from "@todo/utils";
 import { TicketType } from "../ticket/type";
 import { useTicketDetails } from "@todo/hooks";
-import { Loader } from "@todo/components";
+import { Button, Loader } from "@todo/components";
 
 export const TicketDetails = ({
   ticket,
@@ -141,23 +141,24 @@ export const TicketDetails = ({
       </div>
 
       <div className="border-blueGray-200 flex items-center justify-end rounded-b border-t border-solid pb-0 pt-6">
-        <button
-          className="background-transparent mb-1 mr-1 px-6 py-2 text-sm font-bold uppercase text-red-500 outline-none transition-all duration-150 ease-linear focus:outline-none"
-          type="button"
+        <Button
+          width="w-auto"
+          color="gray"
           onClick={() => {
             handleDraftSave();
             closeTicketModal();
           }}
         >
           Close
-        </button>
-        <button
-          className="mb-1 mr-1 rounded bg-emerald-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-emerald-600 disabled:cursor-not-allowed disabled:bg-gray-400"
+        </Button>
+        <Button
+          color="green"
+          width="w-auto"
           type="submit"
           disabled={!isDirty || loading}
         >
           {loading ? <Loader /> : "Save"}
-        </button>
+        </Button>
       </div>
     </form>
   );

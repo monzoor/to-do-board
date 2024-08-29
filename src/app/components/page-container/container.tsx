@@ -12,7 +12,7 @@ export const Container: React.FC = () => {
   return (
     <>
       <CreateActions />
-      <div className="container mx-auto overflow-hidden py-10 pl-5">
+      <div className="mx-auto overflow-hidden py-10 pl-5 lg:container">
         <div className="flex items-start gap-3 overflow-auto">
           {categories.map((category) => (
             <CategoryCard

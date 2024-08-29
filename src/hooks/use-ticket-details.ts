@@ -113,7 +113,7 @@ export const useTicketDetails = (
         id: ticket._id,
         title: currentValues.title,
         description: currentValues.description,
-        dueDate: currentValues.dueDate.toISOString(),
+        dueDate: new Date(currentValues.dueDate).toISOString(),
       });
 
       dispatch(setDrafts(updatedDrafts));
