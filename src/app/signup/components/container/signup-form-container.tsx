@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader } from "@todo/components";
+import { Button, Loader } from "@todo/components";
 import { URLS } from "@todo/contants";
 import { useSignup } from "@todo/hooks";
 import { useRouter } from "next/navigation";
@@ -63,21 +63,15 @@ export const SignUpContainer = () => {
         <p className="mt-3 text-xs text-red-400">{errors.password?.message}</p>
       </div>
 
-      <button
-        disabled={isLoading}
-        type="submit"
-        className="focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4"
-      >
+      <Button disabled={isLoading} type="submit" color="blue">
         {isLoading ? <Loader /> : <span>Sign up</span>}
-      </button>
+      </Button>
+
       <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-        Already have an account{" "}
-        <button
-          onClick={() => router.push(URLS.LOGIN)}
-          className="text-primary-600 dark:text-primary-500 cursor-pointer font-medium hover:underline"
-        >
+        Already have an account?{" "}
+        <Button asUrl width="w-auto" onClick={() => router.push(URLS.LOGIN)}>
           Login
-        </button>
+        </Button>
       </p>
     </form>
   );

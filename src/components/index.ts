@@ -4,3 +4,5 @@ export { Loader } from "./loader";
 export { ErrorBoundary } from "./error-boundary";
 
 export type { ModalProps } from "./modal";
+
+export { Button } from "./atoms";

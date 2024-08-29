@@ -1,4 +1,4 @@
-import { Loader } from "@todo/components";
+import { Button, Loader } from "@todo/components";
 import { useCreateTicket } from "@todo/hooks";
 
 export const CreateTicket = ({
@@ -103,20 +103,12 @@ export const CreateTicket = ({
           </p>
         </div>
         <div className="border-blueGray-200 flex items-center justify-end rounded-b border-t border-solid pb-0 pt-6">
-          <button
-            className="background-transparent mb-1 mr-1 px-6 py-2 text-sm font-bold uppercase text-red-500 outline-none transition-all duration-150 ease-linear focus:outline-none"
-            type="button"
-            onClick={closeTicketModal}
-          >
-            Close
-          </button>
-          <button
-            disabled={loading}
-            className="mb-1 mr-1 rounded bg-emerald-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-emerald-600"
-            type="submit"
-          >
-            {loading ? <Loader /> : <span>Save ticket</span>}
-          </button>
+          <Button color="gray" width="w-auto" onClick={closeTicketModal}>
+            Cancel
+          </Button>
+          <Button disabled={loading} color="green" width="w-auto" type="submit">
+            {loading ? <Loader /> : <span>Create ticket</span>}
+          </Button>
         </div>
       </form>
     </div>

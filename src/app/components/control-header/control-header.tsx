@@ -1,6 +1,6 @@
 "use client";
 
-import { Modal } from "@todo/components";
+import { Button, Modal } from "@todo/components";
 import { useModal } from "@todo/hooks";
 import { CreateCategory } from "../create-category/create-category";
 import { CreateTicket } from "../create-ticket/create-ticket";
@@ -27,20 +27,12 @@ export const CreateActions = () => {
   return (
     <div className="container mx-auto pl-5 pt-6">
       <div className="mb-2 flex">
-        <button
-          className="mb-1 mr-1 rounded bg-blue-500 px-6 py-3 text-xs font-bold capitalize text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-blue-600"
-          type="button"
-          onClick={openCategoryModal}
-        >
+        <Button width="w-auto" color="blue" onClick={openCategoryModal}>
           Create Category
-        </button>
-        <button
-          className="mb-1 mr-1 rounded bg-blue-500 px-6 py-3 text-xs font-bold capitalize text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-blue-600"
-          type="button"
-          onClick={openTicketModal}
-        >
+        </Button>
+        <Button width="w-auto" color="blue" onClick={openTicketModal}>
           Create Ticket
-        </button>
+        </Button>
       </div>
 
       <Modal
