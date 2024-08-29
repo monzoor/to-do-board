@@ -24,12 +24,12 @@ export const Ticket: React.FC<TicketProps> = ({
   return (
     <>
       <div
-        className="ticket mb-2 cursor-pointer bg-white"
+        className="ticket mb-2 cursor-pointer"
         draggable
         onDragStart={(e) => onDragStart(e, index, ticket.category || "")}
         onClick={onTicketClick}
       >
-        <div className="flex flex-col items-start bg-slate-200 p-4">
+        <div className="flex flex-col items-start rounded-md border border-gray-200 bg-white p-4">
           <div className="flex w-full justify-between">
             <div
               className={`flex-shrink-0 rounded-full ${color} px-3 py-1 text-xs`}
@@ -37,9 +37,12 @@ export const Ticket: React.FC<TicketProps> = ({
               {status}
             </div>
           </div>
-          <div className="py-3 font-bold">{ticket.title}</div>
+
+          <div className="my-3 line-clamp-2 text-sm font-bold capitalize">
+            {ticket.title}
+          </div>
           <div className="flex-grow">
-            <div className="line-clamp-2 text-sm">{ticket.description}</div>
+            <div className="line-clamp-2 text-xs">{ticket.description}</div>
           </div>
         </div>
       </div>

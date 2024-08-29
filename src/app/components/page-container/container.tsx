@@ -13,7 +13,7 @@ export const Container: React.FC = () => {
     <>
       <CreateActions />
       <div className="container mx-auto overflow-hidden py-10 pl-5">
-        <div className="flex items-start gap-6 overflow-auto">
+        <div className="flex items-start gap-3 overflow-auto">
           {categories.map((category) => (
             <CategoryCard
               key={category._id}
