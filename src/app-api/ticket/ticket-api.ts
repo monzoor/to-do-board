@@ -1,7 +1,8 @@
 import { api } from "@todo/libs";
 import { APIResponse, TicketResponse } from "../types";
-import { handleError } from "@todo/utils";
 import { API_URLS } from "@todo/contants";
+import { IUpdateTicketFormInputs } from "@todo/app/components/ticket-details/types/update-ticket";
+import { ICreateTicketFormInputs } from "@todo/app/components/create-ticket/types/create-ticket";
 
 export const ticketApi = {
   moveTicket: async ({
@@ -30,12 +31,7 @@ export const ticketApi = {
     description,
     category,
     dueDate,
-  }: {
-    title: string;
-    description: string;
-    category: string;
-    dueDate: string;
-  }) => {
+  }: ICreateTicketFormInputs) => {
     const response = await api.post<APIResponse<TicketResponse>>(
       API_URLS.TICKET,
       {
@@ -53,28 +49,17 @@ export const ticketApi = {
     description,
     category,
     dueDate,
-  }: {
-    ticketId: string;
-    title: string;
-    description: string;
-    category: string;
-    dueDate: string;
-  }) => {
-    try {
-      const response = await api.patch<APIResponse<TicketResponse>>(
-        API_URLS.TICKET,
-        {
-          ticketId,
-          title,
-          description,
-          category,
-          dueDate,
-        },
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Update ticket error:");
-      return handleError(error);
-    }
+  }: IUpdateTicketFormInputs) => {
+    const response = await api.patch<APIResponse<TicketResponse>>(
+      API_URLS.TICKET_UPDATE,
+      {
+        ticketId,
+        title,
+        description,
+        category,
+        dueDate,
+      },
+    );
+    return response.data;
   },
 };

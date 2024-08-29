@@ -6,6 +6,8 @@ import History from "@todo/app/api/model/history/history.modal";
 import { ErrorHandler, errorResponse } from "../../utils";
 import { Types } from "mongoose";
 import { ICategory } from "../../types/category";
+import { validateSchema } from "../../utils/validation/schema-validation";
+import { updateTicketValidationSchema } from "../../validation-schema/update-ticket-validation-schema";
 
 const updateTicket = async (request: NextRequest) => {
   try {
@@ -13,11 +15,19 @@ const updateTicket = async (request: NextRequest) => {
 
     const userId = authenticateUser(request)?.userId;
     if (!userId) {
-      return errorResponse("Invalid token", 401);
+      throw new ErrorHandler("Invalid token", 401);
     }
 
-    const { ticketId, title, description, category, dueDate } =
-      await request.json();
+    const requestBody = await request.json();
+    const validationResponse = await validateSchema(
+      updateTicketValidationSchema,
+      requestBody,
+    );
+    if (!validationResponse.isValid) {
+      return validationResponse.response;
+    }
+
+    const { ticketId, title, description, category, dueDate } = requestBody;
 
     const ticketObjectId = new Types.ObjectId(ticketId);
     const categoryObjectId = new Types.ObjectId(category);
@@ -27,7 +37,7 @@ const updateTicket = async (request: NextRequest) => {
     }).exec()) as ICategory;
 
     if (!categoryByTicketID) {
-      return errorResponse("category not found", 404);
+      throw new ErrorHandler("category not found", 404);
     }
 
     const ticket = categoryByTicketID.tickets.find(
@@ -35,7 +45,7 @@ const updateTicket = async (request: NextRequest) => {
     );
 
     if (!ticket) {
-      return errorResponse("Ticket not found in the current category", 404);
+      throw new ErrorHandler("Ticket not found in the current category", 404);
     }
 
     // Create the new history entry

@@ -9,6 +9,8 @@ import { ticketApi } from "@todo/app-api/ticket/ticket-api";
 import { TicketType } from "@todo/app/components/ticket/type";
 import { ICreateTicketFormInputs } from "@todo/app/components/create-ticket/types/create-ticket";
 import { UseTicketDetailsReturn } from "./types";
+import toast from "react-hot-toast";
+import { AxiosError } from "axios";
 
 export const useTicketDetails = (
   ticket: TicketType,
@@ -66,24 +68,25 @@ export const useTicketDetails = (
     const newData = {
       title: data.title,
       description: data.description,
-      dueDate: new Date(data.dueDate).toISOString(),
+      dueDate: new Date(data.dueDate),
       ticketId: ticket._id,
       category: ticket.category,
     };
 
-    try {
-      const response = await ticketApi.updateTicket(newData);
+    const response = ticketApi.updateTicket(newData);
 
-      if (response.status === "success") {
+    toast.promise(response, {
+      loading: "Loading",
+      success: () => {
         dispatch(setDrafts(updatedDrafts));
         dispatch(getCategories());
         closeTicketModal();
-      } else {
-        console.error("Failed to update the ticket", response);
-      }
-    } catch (error) {
-      console.error("Error updating the ticket");
-    }
+        return "Ticket created successfully";
+      },
+      error: (error: AxiosError | any) => {
+        return error?.response?.data?.message || "Something went wrong";
+      },
+    });
   };
 
   const handleDraftSave = () => {
@@ -119,6 +122,6 @@ export const useTicketDetails = (
     control,
     onSubmit,
     handleDraftSave,
-    currentDraft, // Include currentDraft here
+    currentDraft,
   };
 };

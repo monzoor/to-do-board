@@ -43,7 +43,7 @@ export const useCreateTicket = ({
 
     const newData = {
       ...data,
-      dueDate: new Date(data.dueDate).toISOString(),
+      dueDate: new Date(data.dueDate),
     };
     const response = ticketApi.createTicket(newData);
 

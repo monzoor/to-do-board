@@ -3,6 +3,8 @@ import Category from "@todo/app/api/model/category/category.modal";
 import { NextRequest, NextResponse } from "next/server";
 import { ErrorHandler, errorResponse } from "../../utils";
 import { authenticateUser, withAuth } from "../../helper";
+import { validateSchema } from "../../utils/validation/schema-validation";
+import { createCategoryValidationSchema } from "../../validation-schema/create-category-validation-schema";
 
 const createCategory = async (request: NextRequest) => {
   try {
@@ -14,24 +16,16 @@ const createCategory = async (request: NextRequest) => {
       throw new ErrorHandler("Invalid token", 401);
     }
 
-    const { name, description } = await request.json();
-
-    if (!name || typeof name !== "string" || name.trim().length === 0) {
-      throw new ErrorHandler(
-        "Name is required and must be a non-empty string",
-        400,
-      );
+    const requestBody = await request.json();
+    const validationResponse = await validateSchema(
+      createCategoryValidationSchema,
+      requestBody,
+    );
+    if (!validationResponse.isValid) {
+      return validationResponse.response;
     }
 
-    if (
-      description &&
-      (typeof description !== "string" || description.trim().length === 0)
-    ) {
-      throw new ErrorHandler(
-        "Description, if provided, must be a non-empty string",
-        400,
-      );
-    }
+    const { name, description } = requestBody;
 
     const newCategory = new Category({
       name: name.trim(),
