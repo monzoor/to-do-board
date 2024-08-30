@@ -75,7 +75,7 @@ const moveTicket = async (request: NextRequest) => {
     ticket?.history.push(historyEntry as unknown as IHistory);
 
     if (ticket) {
-      ticket.category = newCategory._id as unknown as Schema.Types.ObjectId;
+      ticket.category = newCategory._id;
     }
 
     // Update the current category to remove the ticket
