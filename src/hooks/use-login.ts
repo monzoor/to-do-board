@@ -12,7 +12,6 @@ import {
   resetUser,
 } from "@todo/libs";
 import { UseLoginReturn } from "./types";
-import Cookies from "js-cookie";
 
 export const useLogin = (): UseLoginReturn => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,7 +19,7 @@ export const useLogin = (): UseLoginReturn => {
   const user = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    if (user.data || !!Cookies.get("authToken")) {
+    if (user.data) {
       window.location.href = "/";
     }
   }, [user.data]);
