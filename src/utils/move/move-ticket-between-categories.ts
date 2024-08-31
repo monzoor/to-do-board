@@ -1,8 +1,9 @@
+import { CategoryResponse } from "@todo/app-api/types/create-category-response";
 import { Categories } from "@todo/types";
 
 export const moveTicketBetweenCategories = (
-  sourceCategory: any,
-  targetCategory: any,
+  sourceCategory: CategoryResponse,
+  targetCategory: CategoryResponse,
   ticketIndex: number,
   categories: Categories,
 ) => {
