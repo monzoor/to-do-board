@@ -9,6 +9,7 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   type = "button",
   asUrl = false,
+  testId,
 }) => {
   const baseClasses =
     "mb-1 mr-1 rounded-md text-sm font-bold uppercase shadow outline-none transition-all duration-150 ease-linear focus:outline-none";
@@ -31,6 +32,7 @@ export const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       type={type}
       className={buttonClasses}
+      data-testid={testId}
     >
       {children}
     </button>

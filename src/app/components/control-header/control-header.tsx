@@ -27,10 +27,20 @@ export const CreateActions = () => {
   return (
     <div className="pl-5 pt-6 lg:container md:mx-auto">
       <div className="mb-2 flex">
-        <Button width="w-auto" color="blue" onClick={openCategoryModal}>
+        <Button
+          width="w-auto"
+          color="blue"
+          onClick={openCategoryModal}
+          testId="category-cta"
+        >
           Create Category
         </Button>
-        <Button width="w-auto" color="blue" onClick={openTicketModal}>
+        <Button
+          width="w-auto"
+          color="blue"
+          onClick={openTicketModal}
+          testId="ticket-cta"
+        >
           Create Ticket
         </Button>
       </div>

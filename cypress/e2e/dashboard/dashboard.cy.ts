@@ -23,4 +23,29 @@ describe("Dashboard Test", () => {
     cy.get("[data-testid=ticket]").first().click();
     cy.contains("Ticket Details").should("be.visible");
   });
+
+  it("should open the create ticket modal", () => {
+    // Assert that the create ticket modal is opened
+    cy.get("[data-testid=ticket-cta]").click();
+    cy.contains("Create Ticket").should("be.visible");
+  });
+
+  it("should open the create category modal", () => {
+    // Assert that the create ticket modal is opened
+    cy.get("[data-testid=category-cta]").click();
+    cy.contains("Create Ticket").should("be.visible");
+  });
+
+  // add drag and drop test
+  it("should drag and drop a ticket", () => {
+    var dataTransfer = new DataTransfer();
+
+    // Assert that the ticket is dragged and dropped
+    cy.get("[data-testid=ticket]")
+      .first()
+      .trigger("dragstart", { dataTransfer });
+    cy.get("[data-testid=category]").last().trigger("drop", { dataTransfer });
+    cy.setCookie("moved", "true");
+    cy.get("[data-testid=category]").last().should("have.length", 1);
+  });
 });
