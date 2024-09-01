@@ -11,7 +11,7 @@
     "test:ci": "jest --ci",
     "test:coverage": "jest --coverage",
     "e2e:build": "NODE_ENV=test NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api/mock next build",
-    "e2e:start": "NODE_ENV=test NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api/mock next dev"
+    "e2e:start": "NODE_ENV=test NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api/mock next start"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
