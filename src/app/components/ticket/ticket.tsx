@@ -28,6 +28,7 @@ export const Ticket: React.FC<TicketProps> = ({
         draggable
         onDragStart={(e) => onDragStart(e, index, ticket.category || "")}
         onClick={onTicketClick}
+        data-testid="ticket"
       >
         <div className="flex flex-col items-start rounded-md border border-gray-200 bg-white p-4">
           <div className="flex w-full justify-between">

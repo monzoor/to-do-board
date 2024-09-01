@@ -37,6 +37,7 @@ export const CategoryCard: React.FC<CategoryProps> = ({
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       data-category={categoryId}
+      data-testid="category"
     >
       <div className="p-4 text-sm font-bold text-gray-500">{header}</div>
       <div className="relative flex-grow p-2">
